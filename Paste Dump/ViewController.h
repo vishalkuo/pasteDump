@@ -10,13 +10,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface ViewController : UIViewController
-
+@interface ViewController : UIViewController;
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
-@property (weak, nonatomic) IBOutlet UILabel *loginStatusLabel;
-@property (weak, nonatomic) IBOutlet UILabel *usernameDisplayLabel;
-@property (weak, nonatomic) IBOutlet UILabel *emailDisplayLabel;
-@property (weak, nonatomic) IBOutlet FBSDKProfilePictureView *profilePictureView;
 
 @end
 
