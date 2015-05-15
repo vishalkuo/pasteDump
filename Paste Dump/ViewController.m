@@ -32,17 +32,30 @@
     loginButton.center = loginPos;
     [self.view addSubview:loginButton];
 
+    NSURL *url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     
+    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:url];
+    req.HTTPMethod = @"POST";
     
+    NSDictionary *dictionary = @{@"id": @"1"};
+    NSString *test = @"id=1";
+    NSError *error = nil;
+    NSData *data = [test dataUsingEncoding:NSUTF8StringEncoding];
     
-    self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
-    loginButton.delegate = self;
+    if(!error){
+        NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@", [json valueForKey:@"paste"]);
+        }];
+        
+        [uploadTask resume];
+    }
+        
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://www.vishalkuo.com/phpGet.php"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        NSLog(@"%@", [json valueForKey:@"name"]);
-    }];
+        
+    
     
     if ([FBSDKAccessToken currentAccessToken]) {
         [self setHide:NO];
@@ -54,15 +67,12 @@
                  self.loginStat.text = output;
                  NSLog(@"fetched user:%@", result);
                  [self setHide:NO];
-                 [dataTask resume];
+                 //[dataTask resume];
                  self.mostRecentPaste.text = @"Your most recent paste was: \n";
-                 [self stopSpinning];
+                 [self setHide:YES];
              }
          }];
     }
-    
-
-    
     
 }
 
@@ -74,6 +84,7 @@
 -(void)setHide:(BOOL)isHidden{
     self.loginStat.hidden = isHidden;
     self.mostRecentPaste.hidden = isHidden;
+    self.indicatorView.hidden = isHidden;
 }
 
 
