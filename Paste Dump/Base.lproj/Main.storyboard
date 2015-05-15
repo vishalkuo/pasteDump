@@ -25,15 +25,28 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No recent pastes found" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2p-tE-aeA">
+                                <rect key="frame" x="210" y="194" width="180" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ShV-VO-9nX">
+                                <rect key="frame" x="290" y="195" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="aF8-I8-EqF" secondAttribute="centerX" id="Bdf-bp-KiE"/>
+                            <constraint firstAttribute="centerX" secondItem="Z2p-tE-aeA" secondAttribute="centerX" id="ZJl-m5-fH0"/>
+                            <constraint firstAttribute="centerY" secondItem="Z2p-tE-aeA" secondAttribute="centerY" constant="96" id="baQ-gL-HDL"/>
                             <constraint firstItem="aF8-I8-EqF" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="xwU-yT-wcC"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="indicatorView" destination="ShV-VO-9nX" id="nXc-Zt-ixW"/>
                         <outlet property="loginStat" destination="aF8-I8-EqF" id="Iod-Z3-Ize"/>
+                        <outlet property="mostRecentPaste" destination="Z2p-tE-aeA" id="f1K-kB-wgp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

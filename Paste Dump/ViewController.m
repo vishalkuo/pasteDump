@@ -14,7 +14,8 @@
 @interface ViewController ()
 
 -(void)setHide:(BOOL)isHidden;
-
+-(void)startSpinning;
+-(void)stopSpinning;
 
 @end
 
@@ -27,35 +28,42 @@
     // Do any additional setup after loading the view, typically from a nib.
     FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
     CGPoint loginPos = self.view.center;
-    loginPos.y += 150;
+    loginPos.y += 200;
     loginButton.center = loginPos;
     [self.view addSubview:loginButton];
-    
 
+    
+    
     
     self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
     loginButton.delegate = self;
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://www.vishalkuo.com/phpGet.php"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSLog(@"%@", [json valueForKey:@"name"]);
+    }];
     
     if ([FBSDKAccessToken currentAccessToken]) {
         [self setHide:NO];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              if (!error) {
+                 [self startSpinning];
                  NSString *output = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
                  self.loginStat.text = output;
                  NSLog(@"fetched user:%@", result);
                  [self setHide:NO];
+                 [dataTask resume];
+                 self.mostRecentPaste.text = @"Your most recent paste was: \n";
+                 [self stopSpinning];
              }
          }];
     }
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://www.vishalkuo.com/phpGet.php"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        NSLog(@"%@", json);
-    }];
+
     
-    [dataTask resume];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,6 +73,7 @@
 
 -(void)setHide:(BOOL)isHidden{
     self.loginStat.hidden = isHidden;
+    self.mostRecentPaste.hidden = isHidden;
 }
 
 
@@ -76,6 +85,13 @@
     [self setHide:NO];
 }
 
+-(void)startSpinning{
+    self.indicatorView.startAnimating;
+}
+
+-(void)stopSpinning{
+    self.indicatorView.stopAnimating;
+}
 
 
 
