@@ -10,7 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface ViewController : UIViewController <FBSDKLoginButtonDelegate>;
+@interface ViewController : UIViewController <FBSDKLoginButtonDelegate>
 
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
 @property (weak, nonatomic) IBOutlet UILabel *loginStat;

@@ -15,6 +15,7 @@
 
 -(void)setHide:(BOOL)isHidden;
 
+
 @end
 
 @implementation ViewController  
@@ -30,7 +31,7 @@
     loginButton.center = loginPos;
     [self.view addSubview:loginButton];
     
-    
+
     
     self.loginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
     loginButton.delegate = self;
@@ -48,8 +49,13 @@
          }];
     }
     
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:@"http://www.vishalkuo.com/phpGet.php"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSLog(@"%@", json);
+    }];
     
-    
+    [dataTask resume];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +75,10 @@
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error{
     [self setHide:NO];
 }
+
+
+
+
 
 
 @end
