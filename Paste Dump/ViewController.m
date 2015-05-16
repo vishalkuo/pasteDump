@@ -34,26 +34,7 @@
     loginButton.center = loginPos;
     [self.view addSubview:loginButton];
     
-    //=====FACEBOOK AUTHENTICATION=====//
-    if ([FBSDKAccessToken currentAccessToken]) {
-        
-        [self startSpinning];
-
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             if (!error) {
-                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
-                 _userId = result[@"id"];
-                 NSLog(@"fetched user:%@", result);
-                 _recentHeaderTitle.text = @"Your most recent paste was: \n";
-                 [_uploadTask resume];
-                [self setPasteValue:_pasteValue];
-                [self stopSpinning];
-                [self setHide:NO];
-                 
-             }
-         }];
-    }
+    
 
     //=====DECLARATION FOR POST REQUEST=====//
     NSURL *url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
@@ -68,14 +49,39 @@
     NSError *error = nil;
     NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
     
-    if(!error){
-        _uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            [self setPasteValue:[_json valueForKey:@"paste"]];
-            
+ 
+    
+    //=====FACEBOOK AUTHENTICATION=====//
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [self startSpinning];
+        
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             if (!error) {
+                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
+                 _userId = result[@"id"];
+                 //NSLog(@"fetched user:%@", result);
+                 _recentHeaderTitle.text = @"Your most recent paste was: \n";
+                 if(!error){
+                     _uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                         _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                         NSLog(@"%@", _json);
+                         _pasteValue = [NSString stringWithFormat:@"%@", [_json valueForKey:@"paste"]];
+                         NSLog(_pasteValue);
+                         
+                         (dispatch_async(dispatch_get_main_queue(), ^{
+                            _mostRecentPaste.text = _pasteValue;
+                         }));
 
-        }];
+
+                     }];
+                 }
+                 [_uploadTask resume];
+                 [self stopSpinning];
+             }
+         }];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {

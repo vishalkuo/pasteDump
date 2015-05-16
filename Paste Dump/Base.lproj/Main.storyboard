@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aF8-I8-EqF">
-                                <rect key="frame" x="279" y="120" width="42" height="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aF8-I8-EqF">
+                                <rect key="frame" x="300" y="120" width="0.0" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Cyw-aw-Q10"/>
                                 </constraints>
@@ -38,8 +38,8 @@
                                     <constraint firstAttribute="width" constant="20" id="TlV-kX-fVH"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDR-3Z-Glc">
-                                <rect key="frame" x="279" y="223" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hi" lineBreakMode="wordWrap" numberOfLines="9" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDR-3Z-Glc">
+                                <rect key="frame" x="144" y="209" width="300" height="231"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -48,11 +48,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="aF8-I8-EqF" secondAttribute="centerX" id="Bdf-bp-KiE"/>
+                            <constraint firstAttribute="centerY" secondItem="SDR-3Z-Glc" secondAttribute="centerY" constant="-24.5" id="JI5-qy-J5D"/>
                             <constraint firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="Qj1-rO-qPL"/>
                             <constraint firstAttribute="centerX" secondItem="Z2p-tE-aeA" secondAttribute="centerX" id="ZJl-m5-fH0"/>
                             <constraint firstAttribute="centerY" secondItem="Z2p-tE-aeA" secondAttribute="centerY" constant="96" id="baQ-gL-HDL"/>
-                            <constraint firstAttribute="centerX" secondItem="SDR-3Z-Glc" secondAttribute="centerX" id="m7S-47-e2D"/>
-                            <constraint firstAttribute="centerY" secondItem="SDR-3Z-Glc" secondAttribute="centerY" constant="66.5" id="rXL-Wl-VTu"/>
+                            <constraint firstAttribute="centerX" secondItem="SDR-3Z-Glc" secondAttribute="centerX" constant="6" id="g1p-TE-cA4"/>
                             <constraint firstItem="aF8-I8-EqF" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="xwU-yT-wcC"/>
                             <constraint firstAttribute="centerY" secondItem="ShV-VO-9nX" secondAttribute="centerY" constant="95" id="yDB-SE-pJN"/>
                         </constraints>
