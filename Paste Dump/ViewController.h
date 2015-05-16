@@ -15,12 +15,12 @@
 @property (weak, nonatomic) NSString *pasteValue;
 @property (weak, nonatomic) NSString *userId;
 @property (weak, nonatomic) NSString *username;
-@property (weak, nonatomic) IBOutlet UILabel *recentHeaderTitle;
 @property (weak, nonatomic) NSURLSessionUploadTask *uploadTask;
 
 @property (weak, nonatomic) IBOutlet UILabel *loginStat;
-@property (weak, nonatomic) IBOutlet UILabel *mostRecentPaste;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (weak, nonatomic) IBOutlet UILabel *recentHeaderTitle;
+@property (nonatomic, retain) IBOutlet UITextView *mostRecentPaste;
 @property (weak, nonatomic) NSDictionary *json;
 
 -(void)startSpinning;

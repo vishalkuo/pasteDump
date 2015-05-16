@@ -46,7 +46,6 @@
     
     //NSString *postString = [NSString stringWithFormat:@"id=%@", _userId];
     NSString *postString = @"id=1";
-    NSError *error = nil;
     NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
     
  
@@ -60,27 +59,29 @@
              if (!error) {
                  _loginStat.text = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
                  _userId = result[@"id"];
-                 //NSLog(@"fetched user:%@", result);
+                 NSLog(@"fetched user:%@", result);
                  _recentHeaderTitle.text = @"Your most recent paste was: \n";
                  if(!error){
                      _uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                         NSLog(@"%@", _json);
-                         _pasteValue = [NSString stringWithFormat:@"%@", [_json valueForKey:@"paste"]];
+                         NSArray *paste = [_json valueForKey:@"paste"];
+                         _pasteValue = paste[0];
                          NSLog(_pasteValue);
-                         
                          (dispatch_async(dispatch_get_main_queue(), ^{
-                            _mostRecentPaste.text = _pasteValue;
+                             [self stopSpinning];
+                             _mostRecentPaste.text = _pasteValue;
                          }));
 
 
                      }];
                  }
                  [_uploadTask resume];
-                 [self stopSpinning];
              }
          }];
     }
+    
+    
+    
     
 }
 

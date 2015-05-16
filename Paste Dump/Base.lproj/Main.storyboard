@@ -22,45 +22,60 @@
                                     <constraint firstAttribute="height" constant="40" id="Cyw-aw-Q10"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No recent pastes found" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2p-tE-aeA">
                                 <rect key="frame" x="210" y="194" width="180" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ShV-VO-9nX">
-                                <rect key="frame" x="290" y="195" width="20" height="20"/>
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Kyy-Pg-nFS"/>
                                     <constraint firstAttribute="width" constant="20" id="TlV-kX-fVH"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Hi" lineBreakMode="wordWrap" numberOfLines="9" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDR-3Z-Glc">
-                                <rect key="frame" x="144" y="209" width="300" height="231"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDR-3Z-Glc">
+                                <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="16" height="-11"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O6U-O8-xos">
+                                <rect key="frame" x="0.0" y="279" width="600" height="39"/>
+                                <color key="backgroundColor" red="0.35955364810000001" green="0.90637994420000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="600" id="RYB-X2-aAm"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.2901960784" green="0.6705882353" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="aF8-I8-EqF" secondAttribute="centerX" id="Bdf-bp-KiE"/>
-                            <constraint firstAttribute="centerY" secondItem="SDR-3Z-Glc" secondAttribute="centerY" constant="-24.5" id="JI5-qy-J5D"/>
-                            <constraint firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="Qj1-rO-qPL"/>
-                            <constraint firstAttribute="centerX" secondItem="Z2p-tE-aeA" secondAttribute="centerX" id="ZJl-m5-fH0"/>
-                            <constraint firstAttribute="centerY" secondItem="Z2p-tE-aeA" secondAttribute="centerY" constant="96" id="baQ-gL-HDL"/>
-                            <constraint firstAttribute="centerX" secondItem="SDR-3Z-Glc" secondAttribute="centerX" constant="6" id="g1p-TE-cA4"/>
+                            <constraint firstAttribute="centerY" secondItem="O6U-O8-xos" secondAttribute="centerY" constant="1.5" id="4aj-53-Zd0"/>
+                            <constraint firstAttribute="centerX" secondItem="Z2p-tE-aeA" secondAttribute="centerX" id="6xg-0l-clg"/>
+                            <constraint firstItem="SDR-3Z-Glc" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="7M3-H9-gJl"/>
+                            <constraint firstItem="O6U-O8-xos" firstAttribute="top" secondItem="Z2p-tE-aeA" secondAttribute="bottom" constant="64" id="Mr5-PN-Tuv"/>
+                            <constraint firstItem="aF8-I8-EqF" firstAttribute="centerX" secondItem="Z2p-tE-aeA" secondAttribute="centerX" id="NCE-gb-Yje"/>
+                            <constraint firstAttribute="centerX" secondItem="O6U-O8-xos" secondAttribute="centerX" id="WHi-Ax-cPv"/>
+                            <constraint firstItem="ShV-VO-9nX" firstAttribute="centerY" secondItem="SDR-3Z-Glc" secondAttribute="centerY" id="XP6-ly-5Uw"/>
+                            <constraint firstItem="ShV-VO-9nX" firstAttribute="centerX" secondItem="SDR-3Z-Glc" secondAttribute="centerX" id="ah6-iy-Zqs"/>
+                            <constraint firstAttribute="centerY" secondItem="Z2p-tE-aeA" secondAttribute="centerY" constant="95.5" id="b19-f2-aoL"/>
+                            <constraint firstItem="SDR-3Z-Glc" firstAttribute="leading" secondItem="aF8-I8-EqF" secondAttribute="leading" id="kC7-GD-13m"/>
                             <constraint firstItem="aF8-I8-EqF" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="xwU-yT-wcC"/>
-                            <constraint firstAttribute="centerY" secondItem="ShV-VO-9nX" secondAttribute="centerY" constant="95" id="yDB-SE-pJN"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="indicatorView" destination="ShV-VO-9nX" id="nXc-Zt-ixW"/>
                         <outlet property="loginStat" destination="aF8-I8-EqF" id="Iod-Z3-Ize"/>
-                        <outlet property="mostRecentPaste" destination="SDR-3Z-Glc" id="ms6-Bq-LUt"/>
+                        <outlet property="mostRecentPaste" destination="O6U-O8-xos" id="vVj-Hc-hcy"/>
                         <outlet property="recentHeaderTitle" destination="Z2p-tE-aeA" id="vXc-wT-0WV"/>
                     </connections>
                 </viewController>
