@@ -24,14 +24,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setHide:YES];
-    // Do any additional setup after loading the view, typically from a nib.
+    [self setHide:NO];
+    [self setPasteValue:@""];
+    
+    //=====FACEBOOK LOGIN BUTTON DECLARATION SECION=====//
     FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
     CGPoint loginPos = self.view.center;
     loginPos.y += 200;
     loginButton.center = loginPos;
     [self.view addSubview:loginButton];
+    
+    //=====FACEBOOK AUTHENTICATION=====//
+    if ([FBSDKAccessToken currentAccessToken]) {
+        
+        [self startSpinning];
 
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+             if (!error) {
+                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
+                 _userId = result[@"id"];
+                 NSLog(@"fetched user:%@", result);
+                 _recentHeaderTitle.text = @"Your most recent paste was: \n";
+                 [_uploadTask resume];
+                [self setPasteValue:_pasteValue];
+                [self stopSpinning];
+                [self setHide:NO];
+                 
+             }
+         }];
+    }
+
+    //=====DECLARATION FOR POST REQUEST=====//
     NSURL *url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
@@ -39,41 +63,19 @@
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:url];
     req.HTTPMethod = @"POST";
     
-    NSDictionary *dictionary = @{@"id": @"1"};
-    NSString *test = @"id=1";
+    //NSString *postString = [NSString stringWithFormat:@"id=%@", _userId];
+    NSString *postString = @"id=1";
     NSError *error = nil;
-    NSData *data = [test dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
     
     if(!error){
-        NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", [json valueForKey:@"paste"]);
+        _uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            [self setPasteValue:[_json valueForKey:@"paste"]];
+            
+
         }];
-        
-        [uploadTask resume];
     }
-        
-    
-        
-    
-    
-    if ([FBSDKAccessToken currentAccessToken]) {
-        [self setHide:NO];
-        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-             if (!error) {
-                 [self startSpinning];
-                 NSString *output = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
-                 self.loginStat.text = output;
-                 NSLog(@"fetched user:%@", result);
-                 [self setHide:NO];
-                 //[dataTask resume];
-                 self.mostRecentPaste.text = @"Your most recent paste was: \n";
-                 [self setHide:YES];
-             }
-         }];
-    }
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,9 +84,9 @@
 }
 
 -(void)setHide:(BOOL)isHidden{
-    self.loginStat.hidden = isHidden;
-    self.mostRecentPaste.hidden = isHidden;
-    self.indicatorView.hidden = isHidden;
+    _loginStat.hidden = isHidden;
+    _recentHeaderTitle.hidden = isHidden;
+    _mostRecentPaste.hidden = isHidden;
 }
 
 
@@ -97,11 +99,17 @@
 }
 
 -(void)startSpinning{
-    self.indicatorView.startAnimating;
+    [_indicatorView startAnimating];
+    _indicatorView.hidden = NO;
 }
 
 -(void)stopSpinning{
-    self.indicatorView.stopAnimating;
+    _indicatorView.hidden = YES;
+    [_indicatorView stopAnimating];
+}
+
+-(void)setPasteValueField:(NSString *)val{
+    _mostRecentPaste.text = val;
 }
 
 

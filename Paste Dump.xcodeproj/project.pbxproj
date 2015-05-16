@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E5E628E31B058E58006DF83C /* FacebookFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E5E628E21B058E58006DF83C /* FacebookFile.m */; };
 		E5EE91A01AFFC0C400DCD4A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE919F1AFFC0C400DCD4A5 /* main.m */; };
 		E5EE91A31AFFC0C400DCD4A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */; };
 		E5EE91A61AFFC0C400DCD4A5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91A51AFFC0C400DCD4A5 /* ViewController.m */; };
@@ -34,8 +33,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E5E628E21B058E58006DF83C /* FacebookFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookFile.m; sourceTree = "<group>"; };
-		E5E628E41B058E6E006DF83C /* FacebookFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FacebookFile.h; sourceTree = "<group>"; };
 		E5EE919A1AFFC0C400DCD4A5 /* Paste Dump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Paste Dump.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EE919E1AFFC0C400DCD4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5EE919F1AFFC0C400DCD4A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -112,8 +109,6 @@
 				E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */,
 				E5EE91A41AFFC0C400DCD4A5 /* ViewController.h */,
 				E5EE91A51AFFC0C400DCD4A5 /* ViewController.m */,
-				E5E628E41B058E6E006DF83C /* FacebookFile.h */,
-				E5E628E21B058E58006DF83C /* FacebookFile.m */,
 				E5EE91A71AFFC0C500DCD4A5 /* Main.storyboard */,
 				E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */,
 				E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */,
@@ -251,7 +246,6 @@
 				E5EE91A61AFFC0C400DCD4A5 /* ViewController.m in Sources */,
 				E5EE91A31AFFC0C400DCD4A5 /* AppDelegate.m in Sources */,
 				E5EE91A01AFFC0C400DCD4A5 /* main.m in Sources */,
-				E5E628E31B058E58006DF83C /* FacebookFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
