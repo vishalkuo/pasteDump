@@ -65,9 +65,9 @@
                      _uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                          NSArray *paste = [_json valueForKey:@"paste"];
-                         _pasteValue = paste[0];
-                         NSLog(_pasteValue);
+
                          (dispatch_async(dispatch_get_main_queue(), ^{
+                            _pasteValue = paste[0];
                              [self stopSpinning];
                              _mostRecentPaste.text = _pasteValue;
                          }));
