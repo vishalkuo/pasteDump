@@ -4,6 +4,7 @@
     $newdb = 'vishzlkf_pastedump';
     $message = $_POST;
     $id = $message['id'];
+    $code = $message['code'];
     $output;
 
     mysql_connect(localhost, $username, $password);
@@ -19,7 +20,8 @@
 
 
     if (is_null($output)){
-        print ("No recent paste found found");
+        $data = array("id" => "NOT GOOD", "paste" => "NOT HAPPENING");
+        echo json_encode($data);
     }else{
         //print $output[0]['paste'];
         echo json_encode($output);
