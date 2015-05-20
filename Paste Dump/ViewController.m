@@ -107,7 +107,6 @@
                      _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                          NSArray *paste = [_json valueForKey:@"paste"];
-                         NSLog(_json);
                          (dispatch_async(dispatch_get_main_queue(), ^{
                             [self setHide:NO];
                              _pasteValue = paste[0];

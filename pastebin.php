@@ -20,7 +20,7 @@
         $query = "SELECT * FROM pastebin WHERE id = $id";    
     }
 
-    echo $code;
+
 
     $r = mysql_query($query);
     
