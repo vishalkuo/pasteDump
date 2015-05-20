@@ -35,19 +35,21 @@
     loginButton.delegate = self;
     [self.view addSubview:loginButton];
     
-    //DECLARATION AREA
+    //=====DECLARATION AREA=====//
     _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    _session = [NSURLSession sessionWithConfiguration:config];
+    _req = [[NSMutableURLRequest alloc] initWithURL:_url];
+    _req.HTTPMethod = @"POST";
 
-    [self testMethod];
-    
- 
-    
+    [self loginProcedure];
     
     if (![FBSDKAccessToken currentAccessToken]){
-        _indicatorView.hidden = YES;
+        [self stopSpinning];
     }
-    
-    
+
+
+
     
     
 }
@@ -66,7 +68,7 @@
 
 -(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton{
     [self setHide:YES];
-    _indicatorView.hidden = YES;
+    //_indicatorView.hidden = YES;
 }
 
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error{
@@ -87,37 +89,27 @@
     _mostRecentPaste.text = val;
 }
 
--(void)testMethod{
-    //=====DECLARATION FOR POST REQUEST=====//
-
-    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
-    
-    NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:_url];
-    req.HTTPMethod = @"POST";
-    
-    //NSString *postString = [NSString stringWithFormat:@"id=%@", _userId];
-    NSString *postString = @"id=1";
-    NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
-    
-    
+-(void)loginProcedure{
     //=====FACEBOOK AUTHENTICATION=====//
     if ([FBSDKAccessToken currentAccessToken]) {
         [self startSpinning];
-        [self setHide:NO];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              if (!error) {
                  _loginStat.text = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
                  _userId = result[@"id"];
+                 //=====DECLARATION FOR POST REQUEST=====//
+                 NSString *postString = @"id=1&code=0";
+                 NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
                  NSLog(@"fetched user:%@", result);
                  _recentHeaderTitle.text = @"Your most recent paste was: \n";
                  if(!error){
-                     _uploadTask = [session uploadTaskWithRequest:req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                     _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                          NSArray *paste = [_json valueForKey:@"paste"];
-                         
+                         NSLog(_json);
                          (dispatch_async(dispatch_get_main_queue(), ^{
+                            [self setHide:NO];
                              _pasteValue = paste[0];
                              [self stopSpinning];
                              _mostRecentPaste.text = _pasteValue;

@@ -23,7 +23,7 @@
 @property (nonatomic, retain) IBOutlet UITextView *mostRecentPaste;
 @property (weak, nonatomic) NSDictionary *json;
 @property (weak, nonatomic) NSArray *paste;
-@property (weak, nonatomic) NSURLSession *session;
+@property (strong, nonatomic) NSURLSession *session;
 @property (strong, nonatomic) NSMutableURLRequest *req;
 @property (weak, nonatomic) NSData *data;
 @property (strong, nonatomic) NSURL *url;
