@@ -19,7 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *loginStat;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
-@property (weak, nonatomic) IBOutlet UILabel *recentHeaderTitle;
 @property (nonatomic, retain) IBOutlet UITextView *mostRecentPaste;
 @property (weak, nonatomic) NSDictionary *json;
 @property (weak, nonatomic) NSArray *paste;

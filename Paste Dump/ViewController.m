@@ -30,7 +30,7 @@
     //=====FACEBOOK LOGIN BUTTON DECLARATION SECION=====//
     FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
     CGPoint loginPos = self.view.center;
-    loginPos.y += 200;
+    loginPos.y += self.view.center.y*0.75;
     loginButton.center = loginPos;
     loginButton.delegate = self;
     [self.view addSubview:loginButton];
@@ -42,16 +42,13 @@
     _req = [[NSMutableURLRequest alloc] initWithURL:_url];
     _req.HTTPMethod = @"POST";
 
-    [self loginProcedure];
     
-    if (![FBSDKAccessToken currentAccessToken]){
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [self loginProcedure];
+        [self startSpinning];
+    }else{
         [self stopSpinning];
     }
-
-
-
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,7 +58,7 @@
 
 -(void)setHide:(BOOL)isHidden{
     _loginStat.hidden = isHidden;
-    _recentHeaderTitle.hidden = isHidden;
+    //_recentHeaderTitle.hidden = isHidden;
     _mostRecentPaste.hidden = isHidden;
 }
 
@@ -73,6 +70,7 @@
 
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error{
     [self setHide:NO];
+    [self loginProcedure];
 }
 
 -(void)startSpinning{
@@ -91,18 +89,15 @@
 
 -(void)loginProcedure{
     //=====FACEBOOK AUTHENTICATION=====//
-    if ([FBSDKAccessToken currentAccessToken]) {
-        [self startSpinning];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              if (!error) {
-                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@", result[@"name"]];
+                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@ \n Your most recent paste was: ", result[@"name"]];
                  _userId = result[@"id"];
                  //=====DECLARATION FOR POST REQUEST=====//
                  NSString *postString = @"id=1&code=0";
                  NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
-                 NSLog(@"fetched user:%@", result);
-                 _recentHeaderTitle.text = @"Your most recent paste was: \n";
+                 //_recentHeaderTitle.text = @"Your most recent paste was: \n";
                  if(!error){
                      _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -113,14 +108,12 @@
                              [self stopSpinning];
                              _mostRecentPaste.text = _pasteValue;
                          }));
-                         
-                         
                      }];
                  }
                  [_uploadTask resume];
              }
          }];
-    }
+
 
 }
 
