@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -30,26 +32,40 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O6U-O8-xos">
-                                <rect key="frame" x="151" y="330" width="298" height="68"/>
+                                <rect key="frame" x="-158" y="173" width="917" height="366"/>
                                 <color key="backgroundColor" red="0.3843137254901961" green="0.68627450980392157" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="298" id="RYB-X2-aAm"/>
+                                    <constraint firstAttribute="width" secondItem="O6U-O8-xos" secondAttribute="height" multiplier="339:135" id="qGk-mM-dn4"/>
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sU1-eV-gpN">
+                                <rect key="frame" x="204" y="421" width="192" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="192" id="2Df-Pb-cvc"/>
+                                    <constraint firstAttribute="height" constant="64" id="a2e-ro-p6Y"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Make A Paste" backgroundImage="ButtonBg.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.2901960784" green="0.6705882353" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="6rD-g3-D6r"/>
-                            <constraint firstAttribute="centerY" secondItem="ShV-VO-9nX" secondAttribute="centerY" id="EGw-pU-MQ1"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="O6U-O8-xos" secondAttribute="bottom" constant="202" id="KDG-2R-qDm"/>
-                            <constraint firstItem="O6U-O8-xos" firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="akE-le-6cY"/>
-                            <constraint firstAttribute="centerX" secondItem="aF8-I8-EqF" secondAttribute="centerX" id="fwC-Nk-zCH"/>
-                            <constraint firstAttribute="centerY" secondItem="aF8-I8-EqF" secondAttribute="centerY" constant="54" id="i1V-nR-20K"/>
-                            <constraint firstItem="O6U-O8-xos" firstAttribute="top" secondItem="ShV-VO-9nX" secondAttribute="bottom" constant="20" id="z9b-cf-O4c"/>
+                            <constraint firstItem="sU1-eV-gpN" firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="FQY-e4-4ft"/>
+                            <constraint firstAttribute="width" secondItem="O6U-O8-xos" secondAttribute="width" multiplier="0.37" constant="261" id="Ncm-Ur-kQ6"/>
+                            <constraint firstItem="ShV-VO-9nX" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="XnN-aK-D0Y"/>
+                            <constraint firstAttribute="centerY" secondItem="O6U-O8-xos" secondAttribute="centerY" constant="-56" id="aQ7-IP-8t4"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="sU1-eV-gpN" secondAttribute="bottom" constant="115" id="ezw-lR-ksq"/>
+                            <constraint firstAttribute="centerX" secondItem="O6U-O8-xos" secondAttribute="centerX" constant="-0.5" id="fCw-Vs-VFZ"/>
+                            <constraint firstItem="ShV-VO-9nX" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="gx4-AJ-8x5"/>
+                            <constraint firstItem="aF8-I8-EqF" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="246" id="pGw-ol-n9t"/>
+                            <constraint firstItem="aF8-I8-EqF" firstAttribute="centerX" secondItem="O6U-O8-xos" secondAttribute="centerX" id="uEV-ZH-neL"/>
                         </constraints>
                     </view>
                     <connections>
@@ -61,5 +77,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="XcK-Zv-Qgd">
+            <objects>
+                <viewController id="fYY-UH-wod" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5Yg-de-HbX"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kvg-66-LsG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TaN-Xn-qb3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xLh-xL-81J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
+    <resources>
+        <image name="ButtonBg.png" width="300" height="120"/>
+    </resources>
 </document>

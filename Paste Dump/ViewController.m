@@ -41,6 +41,7 @@
     _session = [NSURLSession sessionWithConfiguration:config];
     _req = [[NSMutableURLRequest alloc] initWithURL:_url];
     _req.HTTPMethod = @"POST";
+    
 
     
     if ([FBSDKAccessToken currentAccessToken]) {
