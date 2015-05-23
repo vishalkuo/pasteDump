@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */ = {isa = PBXBuildFile; fileRef = E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */; };
+		E50E24951B113A8900A0EAF8 /* TitleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E50E24941B113A8900A0EAF8 /* TitleImage.png */; };
 		E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = E5CBBF791B0ED4A60031774F /* ButtonBg.png */; };
 		E5EE91A01AFFC0C400DCD4A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE919F1AFFC0C400DCD4A5 /* main.m */; };
 		E5EE91A31AFFC0C400DCD4A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBgFb.png; sourceTree = SOURCE_ROOT; };
+		E50E24941B113A8900A0EAF8 /* TitleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleImage.png; sourceTree = SOURCE_ROOT; };
 		E5CBBF791B0ED4A60031774F /* ButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBg.png; sourceTree = "<group>"; };
 		E5EE919A1AFFC0C400DCD4A5 /* Paste Dump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Paste Dump.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EE919E1AFFC0C400DCD4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				E5EE91A41AFFC0C400DCD4A5 /* ViewController.h */,
 				E5EE91A51AFFC0C400DCD4A5 /* ViewController.m */,
 				E5EE91A71AFFC0C500DCD4A5 /* Main.storyboard */,
+				E50E24941B113A8900A0EAF8 /* TitleImage.png */,
 				E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */,
 				E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */,
 				E5EE919D1AFFC0C400DCD4A5 /* Supporting Files */,
@@ -230,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50E24951B113A8900A0EAF8 /* TitleImage.png in Resources */,
 				E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */,
 				E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */,
 				E5EE91A91AFFC0C500DCD4A5 /* Main.storyboard in Resources */,
