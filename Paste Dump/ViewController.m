@@ -16,6 +16,8 @@
 -(void)setHide:(BOOL)isHidden;
 -(void)startSpinning;
 -(void)stopSpinning;
+-(void)fbMethod;
+-(void)setButtonTitle;
 
 @end
 
@@ -24,32 +26,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //=====UI DECLARATION=====//
     [self setHide:YES];
     [self setPasteValue:@""];
     
-    //=====FACEBOOK LOGIN BUTTON DECLARATION SECION=====//
-    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
-    CGPoint loginPos = self.view.center;
-    loginPos.y += self.view.center.y*0.75;
-    loginButton.center = loginPos;
-    loginButton.delegate = self;
-    [self.view addSubview:loginButton];
+    _bgImage = [UIImage imageNamed:@"ButtonBg.png"];
+    _fbBgImage = [UIImage imageNamed:@"ButtonBgFb.png"];
+    _loginManager = [[FBSDKLoginManager alloc] init];
     
-    //=====DECLARATION AREA=====//
+    [_facebookButton addTarget:self
+               action:@selector(fbMethod)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+    //=====POST INFO=====//
     _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     _session = [NSURLSession sessionWithConfiguration:config];
     _req = [[NSMutableURLRequest alloc] initWithURL:_url];
     _req.HTTPMethod = @"POST";
     
-
-    
+    //=====STATE ADJUSTMENT=====//
     if ([FBSDKAccessToken currentAccessToken]) {
         [self loginProcedure];
         [self startSpinning];
     }else{
         [self stopSpinning];
     }
+        [self setButtonTitle];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,7 +62,7 @@
 
 -(void)setHide:(BOOL)isHidden{
     _loginStat.hidden = isHidden;
-    //_recentHeaderTitle.hidden = isHidden;
+    _makeAPasteButton.hidden = isHidden;
     _mostRecentPaste.hidden = isHidden;
 }
 
@@ -93,7 +96,7 @@
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              if (!error) {
-                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@ \n Your most recent paste was: ", result[@"name"]];
+                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@ \n Your most recent paste was: ", result[@"first_name"]];
                  _userId = result[@"id"];
                  //=====DECLARATION FOR POST REQUEST=====//
                  NSString *postString = @"id=1&code=0";
@@ -116,6 +119,37 @@
          }];
 
 
+}
+
+-(void)setButtonTitle{
+    if ([FBSDKAccessToken currentAccessToken]) {
+        [_facebookButton setTitle:@"Logout" forState:UIControlStateNormal];
+        [_facebookButton setBackgroundImage:_bgImage forState:UIControlStateNormal];
+    }else{
+        [_facebookButton setTitle:@"" forState:UIControlStateNormal];
+        [_facebookButton setBackgroundImage:_fbBgImage forState:UIControlStateNormal];
+    }
+}
+
+-(void)fbMethod{
+    //Double declaration because of race conditions
+    if ([FBSDKAccessToken currentAccessToken]){
+        [_loginManager logOut];
+        [self setHide:YES];
+        [self setButtonTitle];
+    }
+    else{
+        [_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            if (error){
+            } else if (result.isCancelled){
+            }else{
+                [self loginProcedure];
+                [self setButtonTitle];
+            }
+        }];
+    }
+    
+    
 }
 
 

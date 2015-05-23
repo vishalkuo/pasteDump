@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */ = {isa = PBXBuildFile; fileRef = E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */; };
 		E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = E5CBBF791B0ED4A60031774F /* ButtonBg.png */; };
 		E5EE91A01AFFC0C400DCD4A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE919F1AFFC0C400DCD4A5 /* main.m */; };
 		E5EE91A31AFFC0C400DCD4A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBgFb.png; sourceTree = SOURCE_ROOT; };
 		E5CBBF791B0ED4A60031774F /* ButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBg.png; sourceTree = "<group>"; };
 		E5EE919A1AFFC0C400DCD4A5 /* Paste Dump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Paste Dump.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EE919E1AFFC0C400DCD4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				E5CBBF791B0ED4A60031774F /* ButtonBg.png */,
+				E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */,
 				E5EE91C51AFFC4A900DCD4A5 /* Bolts.framework */,
 				E5EE91C61AFFC4A900DCD4A5 /* FBAudienceNetwork.framework */,
 				E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */,
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */,
+				E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */,
 				E5EE91A91AFFC0C500DCD4A5 /* Main.storyboard in Resources */,
 				E5EE91AE1AFFC0C500DCD4A5 /* LaunchScreen.xib in Resources */,
 				E5EE91AB1AFFC0C500DCD4A5 /* Images.xcassets in Resources */,

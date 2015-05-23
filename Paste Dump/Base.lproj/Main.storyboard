@@ -26,27 +26,16 @@
                                 </constraints>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aF8-I8-EqF">
-                                <rect key="frame" x="300" y="246" width="0.0" height="0.0"/>
+                                <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O6U-O8-xos">
-                                <rect key="frame" x="-158" y="173" width="917" height="366"/>
-                                <color key="backgroundColor" red="0.3843137254901961" green="0.68627450980392157" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="O6U-O8-xos" secondAttribute="height" multiplier="339:135" id="qGk-mM-dn4"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sU1-eV-gpN">
-                                <rect key="frame" x="204" y="421" width="192" height="64"/>
+                                <rect key="frame" x="204" y="432" width="192" height="74"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="192" id="2Df-Pb-cvc"/>
-                                    <constraint firstAttribute="height" constant="64" id="a2e-ro-p6Y"/>
+                                    <constraint firstAttribute="height" constant="74" id="a2e-ro-p6Y"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="Make A Paste" backgroundImage="ButtonBg.png">
@@ -54,23 +43,48 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMz-Rg-PRY">
+                                <rect key="frame" x="204" y="493" width="192" height="74"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" backgroundImage="ButtonBgFb.png">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O6U-O8-xos">
+                                <rect key="frame" x="-158" y="214" width="917" height="366"/>
+                                <color key="backgroundColor" red="0.3843137254901961" green="0.68627450980392157" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="O6U-O8-xos" secondAttribute="height" multiplier="339:135" constant="-2.066666666666606" id="qGk-mM-dn4"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.2901960784" green="0.6705882353" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="sU1-eV-gpN" firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="FQY-e4-4ft"/>
                             <constraint firstAttribute="width" secondItem="O6U-O8-xos" secondAttribute="width" multiplier="0.37" constant="261" id="Ncm-Ur-kQ6"/>
+                            <constraint firstItem="kMz-Rg-PRY" firstAttribute="top" secondItem="sU1-eV-gpN" secondAttribute="bottom" constant="-13" id="PIe-p1-zzh"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="kMz-Rg-PRY" secondAttribute="bottom" constant="33" id="R4c-Az-NDV"/>
+                            <constraint firstItem="kMz-Rg-PRY" firstAttribute="leading" secondItem="sU1-eV-gpN" secondAttribute="leading" id="WaV-WR-HyY"/>
                             <constraint firstItem="ShV-VO-9nX" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="XnN-aK-D0Y"/>
-                            <constraint firstAttribute="centerY" secondItem="O6U-O8-xos" secondAttribute="centerY" constant="-56" id="aQ7-IP-8t4"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="sU1-eV-gpN" secondAttribute="bottom" constant="115" id="ezw-lR-ksq"/>
+                            <constraint firstAttribute="centerY" secondItem="O6U-O8-xos" secondAttribute="centerY" constant="-97" id="aQ7-IP-8t4"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="sU1-eV-gpN" secondAttribute="bottom" constant="94" id="ezw-lR-ksq"/>
                             <constraint firstAttribute="centerX" secondItem="O6U-O8-xos" secondAttribute="centerX" constant="-0.5" id="fCw-Vs-VFZ"/>
                             <constraint firstItem="ShV-VO-9nX" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="gx4-AJ-8x5"/>
-                            <constraint firstItem="aF8-I8-EqF" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="246" id="pGw-ol-n9t"/>
+                            <constraint firstItem="aF8-I8-EqF" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="300" id="pGw-ol-n9t"/>
                             <constraint firstItem="aF8-I8-EqF" firstAttribute="centerX" secondItem="O6U-O8-xos" secondAttribute="centerX" id="uEV-ZH-neL"/>
+                            <constraint firstItem="kMz-Rg-PRY" firstAttribute="trailing" secondItem="sU1-eV-gpN" secondAttribute="trailing" id="yyb-vy-tsB"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="facebookButton" destination="kMz-Rg-PRY" id="8wk-hR-JsG"/>
                         <outlet property="indicatorView" destination="ShV-VO-9nX" id="nXc-Zt-ixW"/>
                         <outlet property="loginStat" destination="aF8-I8-EqF" id="Iod-Z3-Ize"/>
+                        <outlet property="makeAPasteButton" destination="sU1-eV-gpN" id="jJn-zT-6st"/>
                         <outlet property="mostRecentPaste" destination="O6U-O8-xos" id="vVj-Hc-hcy"/>
                     </connections>
                 </viewController>
@@ -97,5 +111,6 @@
     </scenes>
     <resources>
         <image name="ButtonBg.png" width="300" height="120"/>
+        <image name="ButtonBgFb.png" width="300" height="120"/>
     </resources>
 </document>

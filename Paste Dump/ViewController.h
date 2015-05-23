@@ -20,13 +20,20 @@
 @property (weak, nonatomic) IBOutlet UILabel *loginStat;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 @property (nonatomic, retain) IBOutlet UITextView *mostRecentPaste;
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet UIButton *makeAPasteButton;
+
+
 @property (weak, nonatomic) NSDictionary *json;
 @property (weak, nonatomic) NSArray *paste;
 @property (strong, nonatomic) NSURLSession *session;
 @property (strong, nonatomic) NSMutableURLRequest *req;
 @property (weak, nonatomic) NSData *data;
 @property (strong, nonatomic) NSURL *url;
+@property (strong, nonatomic) FBSDKLoginManager* loginManager;
 
+@property (readonly) UIImage *bgImage;
+@property (readonly) UIImage *fbBgImage;
 -(void)startSpinning;
 -(void)stopSpinning;
 -(void)setPasteValueField:(NSString *)val;
