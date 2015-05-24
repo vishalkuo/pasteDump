@@ -96,7 +96,7 @@
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              if (!error) {
-                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@ \n Your most recent paste was: ", result[@"first_name"]];
+                 _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", result[@"first_name"]];
                  _userId = result[@"id"];
                  //=====DECLARATION FOR POST REQUEST=====//
                  NSString *postString = @"id=1&code=0";
