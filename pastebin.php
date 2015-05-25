@@ -15,7 +15,6 @@
     if ($code == 1){
         $query = "INSERT INTO `pastebin` (id, paste, date) 
             VALUES('$id', '$paste', NOW()) ON DUPLICATE KEY UPDATE paste=VALUES(paste), date=VALUES(date)";
-            echo "here";
     }else{
         $query = "SELECT * FROM pastebin WHERE id = $id";    
     }

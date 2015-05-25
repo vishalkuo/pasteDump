@@ -22,10 +22,12 @@
 
 @end
 
-@implementation ViewController  
+@implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     //=====UI DECLARATION=====//
     [self setPasteValue:@""];
@@ -182,6 +184,8 @@
     [ToastView showToast:self.view withText:@"Copied to Clipboard!" withDuaration:0.35];
 }
 
+- (IBAction)unwindFromConfirmationForm:(UIStoryboardSegue *)segue {
+}
 
 
 @end

@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E50972F41B13541200F2D895 /* Paste Dump-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Paste Dump-Bridging-Header.h"; sourceTree = "<group>"; };
 		E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBgFb.png; sourceTree = SOURCE_ROOT; };
 		E519B2191B121B3A00C5AA7B /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = SOURCE_ROOT; };
 		E55CBFA71B128DB300F0B6D1 /* TitleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleImage.png; sourceTree = SOURCE_ROOT; };
@@ -105,6 +106,7 @@
 				E5EE919C1AFFC0C400DCD4A5 /* Paste Dump */,
 				E5EE91B61AFFC0C500DCD4A5 /* Paste DumpTests */,
 				E5EE919B1AFFC0C400DCD4A5 /* Products */,
+				E50972F41B13541200F2D895 /* Paste Dump-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -394,8 +396,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/vishalkuo/Documents/FacebookSDK,
@@ -404,6 +409,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Paste Dump-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -411,8 +418,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/vishalkuo/Documents/FacebookSDK,
@@ -421,6 +431,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Paste Dump-Bridging-Header.h";
 			};
 			name = Release;
 		};

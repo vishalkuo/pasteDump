@@ -22,10 +22,7 @@
 @property (nonatomic, retain) IBOutlet UITextView *mostRecentPaste;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *makeAPasteButton;
-
-
 @property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
-
 
 @property (weak, nonatomic) NSDictionary *json;
 @property (weak, nonatomic) NSArray *paste;
