@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-
+#import "ToastView.h"
 
 @interface ViewController ()
 
@@ -18,6 +18,7 @@
 -(void)stopSpinning;
 -(void)fbMethod;
 -(void)setButtonTitle;
+-(void)copyToClipboard;
 
 @end
 
@@ -27,9 +28,8 @@
     [super viewDidLoad];
     
     //=====UI DECLARATION=====//
-    [self setHide:YES];
     [self setPasteValue:@""];
-    
+    [self initHide];
     _bgImage = [UIImage imageNamed:@"ButtonBg.png"];
     _fbBgImage = [UIImage imageNamed:@"ButtonBgFb.png"];
     _loginManager = [[FBSDKLoginManager alloc] init];
@@ -37,6 +37,8 @@
     [_facebookButton addTarget:self
                action:@selector(fbMethod)
      forControlEvents:UIControlEventTouchUpInside];
+    
+    [_clipboardButton addTarget:self action:@selector(copyToClipboard) forControlEvents:UIControlEventTouchUpInside];
     
     //=====POST INFO=====//
     _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
@@ -51,6 +53,7 @@
         [self startSpinning];
     }else{
         [self stopSpinning];
+        [self setHide:YES];
     }
         [self setButtonTitle];
 }
@@ -61,9 +64,22 @@
 }
 
 -(void)setHide:(BOOL)isHidden{
-    _loginStat.hidden = isHidden;
-    _makeAPasteButton.hidden = isHidden;
-    _mostRecentPaste.hidden = isHidden;
+    if (isHidden){
+        [self fadeOutAnimation:_loginStat];
+        [self fadeOutAnimation:_makeAPasteButton];
+        [self fadeOutAnimation:_mostRecentPaste];
+        [self fadeOutAnimation:_clipboardButton];
+    }else{
+        _loginStat.alpha = 1.0f;
+        _makeAPasteButton.alpha = 1.0f;
+        _mostRecentPaste.alpha = 1.0f;
+        _clipboardButton.alpha = 1.0f;
+    }
+
+}
+
+-(void)fadeOutAnimation:(UIView *)target{
+    [UIView animateWithDuration:0.2 animations:^{target.alpha = 0.0;}];
 }
 
 
@@ -73,7 +89,6 @@
 }
 
 -(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error{
-    [self setHide:NO];
     [self loginProcedure];
 }
 
@@ -108,6 +123,7 @@
                          NSArray *paste = [_json valueForKey:@"paste"];
                          (dispatch_async(dispatch_get_main_queue(), ^{
                             [self setHide:NO];
+                            _facebookButton.alpha = 1.0f;
                              _pasteValue = paste[0];
                              [self stopSpinning];
                              _mostRecentPaste.text = _pasteValue;
@@ -148,8 +164,22 @@
             }
         }];
     }
-    
-    
+}
+-(void)initHide{
+    _loginStat.alpha = 0;
+    _makeAPasteButton.alpha = 0;
+    _mostRecentPaste.alpha = 0;
+    _clipboardButton.alpha = 0;
+    if ([FBSDKAccessToken currentAccessToken]){
+            _facebookButton.alpha = 0;
+    }
+}
+
+-(void)copyToClipboard{
+    NSString *copyValue = _mostRecentPaste.text;
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:copyValue];
+    [ToastView showToast:self.view withText:@"Copied to Clipboard!" withDuaration:0.35];
 }
 
 

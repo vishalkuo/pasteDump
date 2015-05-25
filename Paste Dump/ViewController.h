@@ -24,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *makeAPasteButton;
 
 
+@property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
+
+
 @property (weak, nonatomic) NSDictionary *json;
 @property (weak, nonatomic) NSArray *paste;
 @property (strong, nonatomic) NSURLSession *session;

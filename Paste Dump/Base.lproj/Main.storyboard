@@ -24,14 +24,8 @@
                                     <constraint firstAttribute="width" constant="20" id="TlV-kX-fVH"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aF8-I8-EqF">
-                                <rect key="frame" x="300" y="307" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sU1-eV-gpN">
-                                <rect key="frame" x="204" y="432" width="192" height="74"/>
+                                <rect key="frame" x="204" y="450" width="192" height="74"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="192" id="2Df-Pb-cvc"/>
                                     <constraint firstAttribute="height" constant="74" id="a2e-ro-p6Y"/>
@@ -43,15 +37,38 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kMz-Rg-PRY">
-                                <rect key="frame" x="204" y="493" width="192" height="74"/>
+                                <rect key="frame" x="204" y="511" width="192" height="74"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="wmE-YS-7Fh"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" backgroundImage="ButtonBgFb.png">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TitleImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="qMM-Hl-odC">
+                                <rect key="frame" x="26" y="60" width="548" height="140"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLv-jJ-0Ot">
+                                <rect key="frame" x="204" y="388" width="192" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="Ky5-BN-8JA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                <state key="normal" title="Copy to Clipboard" backgroundImage="ButtonBg.png">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aF8-I8-EqF">
+                                <rect key="frame" x="300" y="263" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="O6U-O8-xos">
-                                <rect key="frame" x="22" y="320" width="562" height="109"/>
+                                <rect key="frame" x="22" y="271" width="562" height="112"/>
                                 <color key="backgroundColor" red="0.3843137254901961" green="0.68627450980392157" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
@@ -61,23 +78,30 @@
                         </subviews>
                         <color key="backgroundColor" red="0.2901960784" green="0.6705882353" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="qMM-Hl-odC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="10" id="0kx-0e-ofn"/>
+                            <constraint firstItem="tLv-jJ-0Ot" firstAttribute="top" secondItem="aF8-I8-EqF" secondAttribute="bottom" constant="125" id="3cd-nZ-DLR"/>
+                            <constraint firstItem="qMM-Hl-odC" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="40" id="8ha-yx-Isd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="O6U-O8-xos" secondAttribute="trailing" id="DZx-dz-WYt"/>
-                            <constraint firstItem="sU1-eV-gpN" firstAttribute="top" secondItem="aF8-I8-EqF" secondAttribute="bottom" constant="125" id="F6f-1F-8gg"/>
                             <constraint firstItem="sU1-eV-gpN" firstAttribute="centerX" secondItem="ShV-VO-9nX" secondAttribute="centerX" id="FQY-e4-4ft"/>
                             <constraint firstItem="kMz-Rg-PRY" firstAttribute="top" secondItem="sU1-eV-gpN" secondAttribute="bottom" constant="-13" id="PIe-p1-zzh"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="kMz-Rg-PRY" secondAttribute="bottom" constant="33" id="R4c-Az-NDV"/>
-                            <constraint firstItem="O6U-O8-xos" firstAttribute="top" secondItem="aF8-I8-EqF" secondAttribute="bottom" constant="13" id="Vv6-co-gsX"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="kMz-Rg-PRY" secondAttribute="bottom" constant="15" id="R4c-Az-NDV"/>
+                            <constraint firstItem="O6U-O8-xos" firstAttribute="top" secondItem="aF8-I8-EqF" secondAttribute="bottom" constant="8" id="Vv6-co-gsX"/>
+                            <constraint firstItem="tLv-jJ-0Ot" firstAttribute="leading" secondItem="sU1-eV-gpN" secondAttribute="leading" id="W97-Wg-PcL"/>
                             <constraint firstItem="kMz-Rg-PRY" firstAttribute="leading" secondItem="sU1-eV-gpN" secondAttribute="leading" id="WaV-WR-HyY"/>
                             <constraint firstItem="ShV-VO-9nX" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="XnN-aK-D0Y"/>
                             <constraint firstAttribute="centerX" secondItem="aF8-I8-EqF" secondAttribute="centerX" id="YuR-R9-p7h"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="sU1-eV-gpN" secondAttribute="bottom" constant="94" id="ezw-lR-ksq"/>
+                            <constraint firstItem="sU1-eV-gpN" firstAttribute="top" secondItem="qMM-Hl-odC" secondAttribute="bottom" constant="250" id="aB7-bf-pbV"/>
+                            <constraint firstItem="tLv-jJ-0Ot" firstAttribute="top" secondItem="O6U-O8-xos" secondAttribute="bottom" constant="5" id="aV4-NC-Mdg"/>
                             <constraint firstItem="ShV-VO-9nX" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="gx4-AJ-8x5"/>
                             <constraint firstItem="O6U-O8-xos" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="6" id="oNt-B4-5Sl"/>
-                            <constraint firstItem="sU1-eV-gpN" firstAttribute="top" secondItem="O6U-O8-xos" secondAttribute="bottom" constant="3" id="pHf-Pt-T40"/>
+                            <constraint firstItem="tLv-jJ-0Ot" firstAttribute="trailing" secondItem="sU1-eV-gpN" secondAttribute="trailing" id="q03-sD-fnk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qMM-Hl-odC" secondAttribute="trailing" constant="10" id="uYq-EN-9fR"/>
                             <constraint firstItem="kMz-Rg-PRY" firstAttribute="trailing" secondItem="sU1-eV-gpN" secondAttribute="trailing" id="yyb-vy-tsB"/>
+                            <constraint firstItem="sU1-eV-gpN" firstAttribute="top" secondItem="tLv-jJ-0Ot" secondAttribute="bottom" constant="-13" id="zke-Qn-yWR"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clipboardButton" destination="tLv-jJ-0Ot" id="dCP-IH-2vT"/>
                         <outlet property="facebookButton" destination="kMz-Rg-PRY" id="8wk-hR-JsG"/>
                         <outlet property="indicatorView" destination="ShV-VO-9nX" id="nXc-Zt-ixW"/>
                         <outlet property="loginStat" destination="aF8-I8-EqF" id="Iod-Z3-Ize"/>
@@ -87,27 +111,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="XcK-Zv-Qgd">
-            <objects>
-                <viewController id="fYY-UH-wod" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5Yg-de-HbX"/>
-                        <viewControllerLayoutGuide type="bottom" id="Kvg-66-LsG"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TaN-Xn-qb3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xLh-xL-81J" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
+            <point key="canvasLocation" x="236" y="338"/>
         </scene>
     </scenes>
     <resources>
         <image name="ButtonBg.png" width="300" height="120"/>
         <image name="ButtonBgFb.png" width="300" height="120"/>
+        <image name="TitleImage.png" width="1160" height="328"/>
     </resources>
 </document>
