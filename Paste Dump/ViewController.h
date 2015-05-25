@@ -10,7 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface ViewController : UIViewController <FBSDKLoginButtonDelegate>
+@interface ViewController : UIViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) NSString *pasteValue;
 @property (weak, nonatomic) NSString *userId;
@@ -23,7 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *makeAPasteButton;
 @property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
+@property (weak, nonatomic) IBOutlet UITextField *makePasteField;
 
+@property (nonatomic, assign) BOOL isInPasteState;
 @property (weak, nonatomic) NSDictionary *json;
 @property (weak, nonatomic) NSArray *paste;
 @property (strong, nonatomic) NSURLSession *session;
@@ -34,6 +36,7 @@
 
 @property (readonly) UIImage *bgImage;
 @property (readonly) UIImage *fbBgImage;
+
 -(void)startSpinning;
 -(void)stopSpinning;
 -(void)setPasteValueField:(NSString *)val;

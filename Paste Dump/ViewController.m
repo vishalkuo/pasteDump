@@ -19,7 +19,7 @@
 -(void)fbMethod;
 -(void)setButtonTitle;
 -(void)copyToClipboard;
-
+-(void)togglePaste;
 @end
 
 @implementation ViewController
@@ -27,8 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _isInPasteState = NO;
+    [_makePasteField setReturnKeyType:UIReturnKeySend];
     
-    
+    self.makePasteField.delegate = self;
     //=====UI DECLARATION=====//
     [self setPasteValue:@""];
     [self initHide];
@@ -41,6 +43,8 @@
      forControlEvents:UIControlEventTouchUpInside];
     
     [_clipboardButton addTarget:self action:@selector(copyToClipboard) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_makeAPasteButton addTarget:self action:@selector(togglePaste) forControlEvents:UIControlEventTouchUpInside];
     
     //=====POST INFO=====//
     _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
@@ -71,6 +75,7 @@
         [self fadeOutAnimation:_makeAPasteButton];
         [self fadeOutAnimation:_mostRecentPaste];
         [self fadeOutAnimation:_clipboardButton];
+        [self fadeOutAnimation:_makePasteField];
     }else{
         _loginStat.alpha = 1.0f;
         _makeAPasteButton.alpha = 1.0f;
@@ -82,16 +87,6 @@
 
 -(void)fadeOutAnimation:(UIView *)target{
     [UIView animateWithDuration:0.2 animations:^{target.alpha = 0.0;}];
-}
-
-
--(void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton{
-    [self setHide:YES];
-    //_indicatorView.hidden = YES;
-}
-
--(void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error{
-    [self loginProcedure];
 }
 
 -(void)startSpinning{
@@ -153,6 +148,8 @@
     //Double declaration because of race conditions
     if ([FBSDKAccessToken currentAccessToken]){
         [_loginManager logOut];
+        _isInPasteState = YES;
+        [self togglePaste];
         [self setHide:YES];
         [self setButtonTitle];
     }
@@ -178,14 +175,46 @@
 }
 
 -(void)copyToClipboard{
-    NSString *copyValue = _mostRecentPaste.text;
-    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-    [pasteBoard setString:copyValue];
-    [ToastView showToast:self.view withText:@"Copied to Clipboard!" withDuaration:0.35];
+    if (!_isInPasteState){
+        NSString *copyValue = _mostRecentPaste.text;
+        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+        [pasteBoard setString:copyValue];
+        [ToastView showToast:self.view withText:@"Copied to Clipboard!" withDuaration:0.75];
+    }else{
+        [self sendPasteWithText:_makePasteField.text];
+    }
+   
 }
 
 - (IBAction)unwindFromConfirmationForm:(UIStoryboardSegue *)segue {
 }
 
+-(void)togglePaste{
+    if(!_isInPasteState){
+        _mostRecentPaste.alpha = 0;
+        _makePasteField.alpha = 1;
+        _loginStat.alpha = 0;
+        [_clipboardButton setTitle:@"Send" forState:UIControlStateNormal];
+        [_makeAPasteButton setTitle:@"Recent Pastes" forState:UIControlStateNormal];
+    }else{
+        _mostRecentPaste.alpha = 1;
+        _makePasteField.alpha = 0;
+        _loginStat.alpha = 1;
+        [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
+        [_makeAPasteButton setTitle:@"Make a Paste" forState:UIControlStateNormal];
+    }
+    _isInPasteState = !_isInPasteState;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    [self sendPasteWithText:textField.text];
+    return YES;
+}
+
+-(void)sendPasteWithText:(NSString *)sendValue{
+    
+    [ToastView showToast:self.view withText:@"Sent!" withDuaration:0.75];
+}
 
 @end
