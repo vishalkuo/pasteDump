@@ -13,9 +13,10 @@
 @interface ViewController : UIViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) NSString *pasteValue;
-@property (weak, nonatomic) NSString *userId;
+@property (strong, nonatomic) NSString *userId;
 @property (weak, nonatomic) NSString *username;
 @property (weak, nonatomic) NSURLSessionUploadTask *uploadTask;
+@property (weak, nonatomic) NSURLSessionUploadTask *pasteTask;
 
 @property (weak, nonatomic) IBOutlet UILabel *loginStat;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;

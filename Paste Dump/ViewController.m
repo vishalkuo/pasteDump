@@ -20,6 +20,7 @@
 -(void)setButtonTitle;
 -(void)copyToClipboard;
 -(void)togglePaste;
+-(void)loginProcedure;
 @end
 
 @implementation ViewController
@@ -84,6 +85,23 @@
     }
 
 }
+-(void)togglePaste{
+    if(!_isInPasteState){
+        _mostRecentPaste.alpha = 0;
+        _makePasteField.alpha = 1;
+        _loginStat.alpha = 0;
+        [_clipboardButton setTitle:@"Send" forState:UIControlStateNormal];
+        [_makeAPasteButton setTitle:@"Recent Pastes" forState:UIControlStateNormal];
+    }else{
+        _mostRecentPaste.alpha = 1;
+        _makePasteField.alpha = 0;
+        _loginStat.alpha = 1;
+        [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
+        [_makeAPasteButton setTitle:@"Make a Paste" forState:UIControlStateNormal];
+    }
+    _isInPasteState = !_isInPasteState;
+}
+
 
 -(void)fadeOutAnimation:(UIView *)target{
     [UIView animateWithDuration:0.2 animations:^{target.alpha = 0.0;}];
@@ -111,19 +129,24 @@
                  _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", result[@"first_name"]];
                  _userId = result[@"id"];
                  //=====DECLARATION FOR POST REQUEST=====//
-                 NSString *postString = @"id=1&code=0";
+                 NSString *postString =  [NSString stringWithFormat:@"id=%@&code=0", _userId];
                  NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
-                 //_recentHeaderTitle.text = @"Your most recent paste was: \n";
                  if(!error){
                      _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                          NSArray *paste = [_json valueForKey:@"paste"];
+                         NSArray *res = [_json valueForKey:@"response"];
                          (dispatch_async(dispatch_get_main_queue(), ^{
                             [self setHide:NO];
                             _facebookButton.alpha = 1.0f;
                              _pasteValue = paste[0];
                              [self stopSpinning];
-                             _mostRecentPaste.text = _pasteValue;
+                             if([res[0] integerValue] == 100){
+                                 _mostRecentPaste.text = @"No pastes found";
+                             }else{
+                                 _mostRecentPaste.text = _pasteValue;
+                            }
+
                          }));
                      }];
                  }
@@ -189,23 +212,6 @@
 - (IBAction)unwindFromConfirmationForm:(UIStoryboardSegue *)segue {
 }
 
--(void)togglePaste{
-    if(!_isInPasteState){
-        _mostRecentPaste.alpha = 0;
-        _makePasteField.alpha = 1;
-        _loginStat.alpha = 0;
-        [_clipboardButton setTitle:@"Send" forState:UIControlStateNormal];
-        [_makeAPasteButton setTitle:@"Recent Pastes" forState:UIControlStateNormal];
-    }else{
-        _mostRecentPaste.alpha = 1;
-        _makePasteField.alpha = 0;
-        _loginStat.alpha = 1;
-        [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
-        [_makeAPasteButton setTitle:@"Make a Paste" forState:UIControlStateNormal];
-    }
-    _isInPasteState = !_isInPasteState;
-}
-
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     [self sendPasteWithText:textField.text];
@@ -213,8 +219,33 @@
 }
 
 -(void)sendPasteWithText:(NSString *)sendValue{
+    NSString *postString = [NSString stringWithFormat:@"id=%@&code=1&paste=%@", _userId, sendValue];
+    NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
+    _pasteTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        (dispatch_async(dispatch_get_main_queue(), ^{
+            [ToastView showToast:self.view withText:@"Sent!" withDuaration:0.75];
+        }));
+    }];
+    [_pasteTask resume];
+}
+- (void)  loginButton:(FBSDKLoginButton *)loginButton
+didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
+                error:(NSError *)error{
     
-    [ToastView showToast:self.view withText:@"Sent!" withDuaration:0.75];
+}
+
+- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton{
+    
+}
+
+-(BOOL)canBecomeFirstResponder{
+    return YES;
+}
+
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
+    if(motion == UIEventSubtypeMotionShake){
+        [self loginProcedure];
+    }
 }
 
 @end

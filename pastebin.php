@@ -30,7 +30,9 @@
         }
         if (is_null($output)){
             $data = array("id" => "NOT GOOD", "paste" => "NOT HAPPENING", "response" => 100);
-            echo json_encode($data);
+            echo "[";
+            echo json_encode($data); 
+            echo "]";
         }else{
 
             echo json_encode($output);
