@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "ToastView.h"
+#import "Reachability.h"
 
 @interface ViewController ()
 
@@ -39,6 +40,8 @@
     _fbBgImage = [UIImage imageNamed:@"ButtonBgFb.png"];
     _loginManager = [[FBSDKLoginManager alloc] init];
     
+    
+    
     [_facebookButton addTarget:self
                action:@selector(fbMethod)
      forControlEvents:UIControlEventTouchUpInside];
@@ -59,7 +62,6 @@
     //=====STATE ADJUSTMENT=====//
     if ([FBSDKAccessToken currentAccessToken]) {
         [self loginProcedure];
-        [self startSpinning];
     }else{
         [self stopSpinning];
         [self setHide:YES];
@@ -80,6 +82,7 @@
         [self fadeOutAnimation:_clipboardButton];
         [self fadeOutAnimation:_makePasteField];
         [self fadeOutAnimation:_refreshButton];
+        [self stopSpinning];
     }else{
         _loginStat.alpha = 1.0f;
         _makeAPasteButton.alpha = 1.0f;
@@ -130,11 +133,14 @@
 
 -(void)loginProcedure{
     //=====FACEBOOK AUTHENTICATION=====//
+    if ([self isConnected]){
+        [self startSpinning];
         [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
              if (!error) {
                  _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", result[@"first_name"]];
                  _userId = result[@"id"];
+                 
                  //=====DECLARATION FOR POST REQUEST=====//
                  NSString *postString =  [NSString stringWithFormat:@"id=%@&code=0", _userId];
                  NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
@@ -160,6 +166,11 @@
                  [_uploadTask resume];
              }
          }];
+    }else{
+        [self setHide:NO];
+        _loginStat.text = @"No internet connection.\n Please try again later.";
+    }
+            [self stopSpinning];
 
 
 }
@@ -183,7 +194,7 @@
         [self setHide:YES];
         [self setButtonTitle];
     }
-    else{
+    else if ([self isConnected]){
         [_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error){
             } else if (result.isCancelled){
@@ -192,6 +203,8 @@
                 [self setButtonTitle];
             }
         }];
+    }else{
+        [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
     }
 }
 -(void)initHide{
@@ -200,9 +213,6 @@
     _mostRecentPaste.alpha = 0;
     _clipboardButton.alpha = 0;
     _refreshButton.alpha = 0;
-    if ([FBSDKAccessToken currentAccessToken]){
-            _facebookButton.alpha = 0;
-    }
 }
 
 -(void)copyToClipboard{
@@ -234,8 +244,13 @@
             [ToastView showToast:self.view withText:@"Sent!" withDuaration:0.75];
         }));
     }];
-    [_pasteTask resume];
-    _makePasteField.text = @"";
+    if ([self isConnected]){
+        [_pasteTask resume];
+        _makePasteField.text = @"";
+    }else{
+        [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
+    }
+    
 }
 - (void)  loginButton:(FBSDKLoginButton *)loginButton
 didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
@@ -258,8 +273,22 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 }
 
 -(void)refreshScreen{
-    [ToastView showToast:self.view withText:@"Refreshing!" withDuaration:0.75];
+    if ([self isConnected]){
+        [ToastView showToast:self.view withText:@"Refreshing!" withDuaration:0.75];
+    }
+    
     [self loginProcedure];
 }
+
+-(BOOL)isConnected{
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus stat = [networkReachability currentReachabilityStatus];
+    if (stat == NotReachable){
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
 
 @end

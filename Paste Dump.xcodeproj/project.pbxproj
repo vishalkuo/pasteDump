@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */ = {isa = PBXBuildFile; fileRef = E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */; };
+		E51001D81B13F9EE00ADCDDE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E51001D71B13F9EE00ADCDDE /* SystemConfiguration.framework */; };
+		E51001DE1B13FC4600ADCDDE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E51001DD1B13FC4600ADCDDE /* Reachability.m */; };
 		E5162AEF1B13E25F00DAB45D /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = E5162AEE1B13E25F00DAB45D /* refresh.png */; };
 		E519B21A1B121B3A00C5AA7B /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = E519B2191B121B3A00C5AA7B /* title.png */; };
 		E55CBFA81B128DB300F0B6D1 /* TitleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E55CBFA71B128DB300F0B6D1 /* TitleImage.png */; };
@@ -26,6 +28,7 @@
 		E5EE91CC1AFFC4A900DCD4A5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */; };
 		E5EE91CD1AFFC4A900DCD4A5 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C81AFFC4A900DCD4A5 /* FBSDKMessengerShareKit.framework */; };
 		E5EE91CE1AFFC4A900DCD4A5 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C91AFFC4A900DCD4A5 /* FBSDKShareKit.framework */; };
+		E5F9447C1B13F5A3008207C7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5F9447B1B13F5A3008207C7 /* Launch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +44,9 @@
 /* Begin PBXFileReference section */
 		E50972F41B13541200F2D895 /* Paste Dump-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Paste Dump-Bridging-Header.h"; sourceTree = "<group>"; };
 		E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBgFb.png; sourceTree = SOURCE_ROOT; };
+		E51001D71B13F9EE00ADCDDE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E51001DC1B13FC4600ADCDDE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		E51001DD1B13FC4600ADCDDE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		E5162AEE1B13E25F00DAB45D /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = SOURCE_ROOT; };
 		E519B2191B121B3A00C5AA7B /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = SOURCE_ROOT; };
 		E55CBFA71B128DB300F0B6D1 /* TitleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleImage.png; sourceTree = SOURCE_ROOT; };
@@ -66,6 +72,7 @@
 		E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E5EE91C81AFFC4A900DCD4A5 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = ../../FacebookSDK/FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		E5EE91C91AFFC4A900DCD4A5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
+		E5F9447B1B13F5A3008207C7 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E51001D81B13F9EE00ADCDDE /* SystemConfiguration.framework in Frameworks */,
 				E5EE91CA1AFFC4A900DCD4A5 /* Bolts.framework in Frameworks */,
 				E5EE91CB1AFFC4A900DCD4A5 /* FBAudienceNetwork.framework in Frameworks */,
 				E5EE91CC1AFFC4A900DCD4A5 /* FBSDKLoginKit.framework in Frameworks */,
@@ -95,10 +103,12 @@
 		E5EE91911AFFC0C400DCD4A5 = {
 			isa = PBXGroup;
 			children = (
+				E51001D71B13F9EE00ADCDDE /* SystemConfiguration.framework */,
 				E5CBBF791B0ED4A60031774F /* ButtonBg.png */,
 				E519B2191B121B3A00C5AA7B /* title.png */,
 				E55CBFA71B128DB300F0B6D1 /* TitleImage.png */,
 				E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */,
+				E5162AEE1B13E25F00DAB45D /* refresh.png */,
 				E5EE91C51AFFC4A900DCD4A5 /* Bolts.framework */,
 				E5EE91C61AFFC4A900DCD4A5 /* FBAudienceNetwork.framework */,
 				E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */,
@@ -126,13 +136,15 @@
 			children = (
 				E5EE91A11AFFC0C400DCD4A5 /* AppDelegate.h */,
 				E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */,
+				E51001DC1B13FC4600ADCDDE /* Reachability.h */,
+				E51001DD1B13FC4600ADCDDE /* Reachability.m */,
 				E5C197B91B12DD1100000BA0 /* ToastView.h */,
 				E5C197BA1B12DD1100000BA0 /* ToastView.m */,
 				E5EE91A41AFFC0C400DCD4A5 /* ViewController.h */,
 				E5EE91A51AFFC0C400DCD4A5 /* ViewController.m */,
-				E5EE91A71AFFC0C500DCD4A5 /* Main.storyboard */,
-				E5162AEE1B13E25F00DAB45D /* refresh.png */,
 				E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */,
+				E5EE91A71AFFC0C500DCD4A5 /* Main.storyboard */,
+				E5F9447B1B13F5A3008207C7 /* Launch.storyboard */,
 				E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */,
 				E5EE919D1AFFC0C400DCD4A5 /* Supporting Files */,
 			);
@@ -248,6 +260,7 @@
 			files = (
 				E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */,
 				E519B21A1B121B3A00C5AA7B /* title.png in Resources */,
+				E5F9447C1B13F5A3008207C7 /* Launch.storyboard in Resources */,
 				E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */,
 				E5EE91A91AFFC0C500DCD4A5 /* Main.storyboard in Resources */,
 				E5EE91AE1AFFC0C500DCD4A5 /* LaunchScreen.xib in Resources */,
@@ -275,6 +288,7 @@
 				E5EE91A61AFFC0C400DCD4A5 /* ViewController.m in Sources */,
 				E5EE91A31AFFC0C400DCD4A5 /* AppDelegate.m in Sources */,
 				E5EE91A01AFFC0C400DCD4A5 /* main.m in Sources */,
+				E51001DE1B13FC4600ADCDDE /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
