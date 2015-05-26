@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *makeAPasteButton;
 @property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
 @property (weak, nonatomic) IBOutlet UITextField *makePasteField;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 
 @property (nonatomic, assign) BOOL isInPasteState;
 @property (weak, nonatomic) NSDictionary *json;

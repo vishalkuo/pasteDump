@@ -47,6 +47,8 @@
     
     [_makeAPasteButton addTarget:self action:@selector(togglePaste) forControlEvents:UIControlEventTouchUpInside];
     
+    [_refreshButton addTarget:self action:@selector(refreshScreen) forControlEvents:UIControlEventTouchUpInside];
+    
     //=====POST INFO=====//
     _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -77,11 +79,13 @@
         [self fadeOutAnimation:_mostRecentPaste];
         [self fadeOutAnimation:_clipboardButton];
         [self fadeOutAnimation:_makePasteField];
+        [self fadeOutAnimation:_refreshButton];
     }else{
         _loginStat.alpha = 1.0f;
         _makeAPasteButton.alpha = 1.0f;
         _mostRecentPaste.alpha = 1.0f;
         _clipboardButton.alpha = 1.0f;
+        _refreshButton.alpha = 1.0f;
     }
 
 }
@@ -90,12 +94,15 @@
         _mostRecentPaste.alpha = 0;
         _makePasteField.alpha = 1;
         _loginStat.alpha = 0;
+        _refreshButton.alpha = 0;
+        _makePasteField.text = @"";
         [_clipboardButton setTitle:@"Send" forState:UIControlStateNormal];
-        [_makeAPasteButton setTitle:@"Recent Pastes" forState:UIControlStateNormal];
+        [_makeAPasteButton setTitle:@"Back" forState:UIControlStateNormal];
     }else{
         _mostRecentPaste.alpha = 1;
         _makePasteField.alpha = 0;
         _loginStat.alpha = 1;
+        _refreshButton.alpha = 1;
         [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
         [_makeAPasteButton setTitle:@"Make a Paste" forState:UIControlStateNormal];
     }
@@ -192,6 +199,7 @@
     _makeAPasteButton.alpha = 0;
     _mostRecentPaste.alpha = 0;
     _clipboardButton.alpha = 0;
+    _refreshButton.alpha = 0;
     if ([FBSDKAccessToken currentAccessToken]){
             _facebookButton.alpha = 0;
     }
@@ -227,6 +235,7 @@
         }));
     }];
     [_pasteTask resume];
+    _makePasteField.text = @"";
 }
 - (void)  loginButton:(FBSDKLoginButton *)loginButton
 didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
@@ -244,8 +253,13 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     if(motion == UIEventSubtypeMotionShake){
-        [self loginProcedure];
+        [self refreshScreen];
     }
+}
+
+-(void)refreshScreen{
+    [ToastView showToast:self.view withText:@"Refreshing!" withDuaration:0.75];
+    [self loginProcedure];
 }
 
 @end

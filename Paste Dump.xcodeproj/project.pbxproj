@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */ = {isa = PBXBuildFile; fileRef = E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */; };
+		E5162AEF1B13E25F00DAB45D /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = E5162AEE1B13E25F00DAB45D /* refresh.png */; };
 		E519B21A1B121B3A00C5AA7B /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = E519B2191B121B3A00C5AA7B /* title.png */; };
 		E55CBFA81B128DB300F0B6D1 /* TitleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E55CBFA71B128DB300F0B6D1 /* TitleImage.png */; };
 		E5C197BB1B12DD1100000BA0 /* ToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C197BA1B12DD1100000BA0 /* ToastView.m */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		E50972F41B13541200F2D895 /* Paste Dump-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Paste Dump-Bridging-Header.h"; sourceTree = "<group>"; };
 		E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBgFb.png; sourceTree = SOURCE_ROOT; };
+		E5162AEE1B13E25F00DAB45D /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = SOURCE_ROOT; };
 		E519B2191B121B3A00C5AA7B /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = SOURCE_ROOT; };
 		E55CBFA71B128DB300F0B6D1 /* TitleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleImage.png; sourceTree = SOURCE_ROOT; };
 		E5C197B91B12DD1100000BA0 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				E5EE91A41AFFC0C400DCD4A5 /* ViewController.h */,
 				E5EE91A51AFFC0C400DCD4A5 /* ViewController.m */,
 				E5EE91A71AFFC0C500DCD4A5 /* Main.storyboard */,
+				E5162AEE1B13E25F00DAB45D /* refresh.png */,
 				E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */,
 				E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */,
 				E5EE919D1AFFC0C400DCD4A5 /* Supporting Files */,
@@ -248,6 +251,7 @@
 				E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */,
 				E5EE91A91AFFC0C500DCD4A5 /* Main.storyboard in Resources */,
 				E5EE91AE1AFFC0C500DCD4A5 /* LaunchScreen.xib in Resources */,
+				E5162AEF1B13E25F00DAB45D /* refresh.png in Resources */,
 				E55CBFA81B128DB300F0B6D1 /* TitleImage.png in Resources */,
 				E5EE91AB1AFFC0C500DCD4A5 /* Images.xcassets in Resources */,
 			);
