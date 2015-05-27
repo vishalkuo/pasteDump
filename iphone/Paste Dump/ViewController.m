@@ -267,17 +267,16 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
 }
 
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-    if(motion == UIEventSubtypeMotionShake){
+    if(motion == UIEventSubtypeMotionShake && [FBSDKAccessToken currentAccessToken]){
         [self refreshScreen];
     }
 }
 
 -(void)refreshScreen{
-    if ([self isConnected]){
+    if ([self isConnected] && [FBSDKAccessToken currentAccessToken]){
         [ToastView showToast:self.view withText:@"Refreshing!" withDuaration:0.75];
+            [self loginProcedure];
     }
-    
-    [self loginProcedure];
 }
 
 -(BOOL)isConnected{
