@@ -82,7 +82,7 @@ float const ToastGap = 10.0f;
 - (void)hideSelf
 {
     
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.38 animations:^{
         self.alpha = 0.0;
         self.toastLabel.alpha = 0.0;
     }completion:^(BOOL finished) {
