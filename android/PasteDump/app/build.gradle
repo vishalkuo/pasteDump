@@ -19,6 +19,9 @@ android {
     }
 }
 
+repositories { mavenCentral() }
+
 dependencies {
+    compile 'com.facebook.android:facebook-android-sdk:3.23.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
