@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.facebook.AppEventsLogger;
+import com.facebook.FacebookSdk;
 
 
 public class MainActivity extends Activity {
@@ -15,6 +14,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         View decorView = getWindow().getDecorView();
@@ -22,12 +22,6 @@ public class MainActivity extends Activity {
         decorView.setSystemUiVisibility(uiOptions);
         ActionBar actionBar = getActionBar();
         actionBar.hide();
-
-        AppEventsLogger.activateApp(this);
-
-
-
-
 
     }
 
@@ -41,8 +35,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

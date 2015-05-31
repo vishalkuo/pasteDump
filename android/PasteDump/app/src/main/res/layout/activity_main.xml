@@ -13,17 +13,12 @@
         android:src = "@drawable/titleimage"
         android:layout_marginTop="50dp"/>
 
-    <Button
-        android:id="@+id/About"
-        android:elevation="5dp"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:layout_centerInParent="true"
-        android:layout_width="190dp"
-        android:layout_marginBottom="30dp"
-        android:layout_height="45dp"
-        android:background="@drawable/btnselect"
-        android:layout_alignParentBottom="true"
-        />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
 
 </RelativeLayout>
