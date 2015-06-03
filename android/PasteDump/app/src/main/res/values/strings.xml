@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">PasteDump</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name = "app_id">1631601870418438</string>
+</resources>
