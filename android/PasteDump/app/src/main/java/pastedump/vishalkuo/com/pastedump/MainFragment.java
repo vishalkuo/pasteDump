@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -24,12 +26,12 @@ import com.facebook.login.widget.LoginButton;
 public class MainFragment extends Fragment {
 
     private CallbackManager callbackManager;
+    private AccessToken accessToken;
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
+            accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
-            Log.d("YAY", profile.getName());
         }
 
         @Override
@@ -42,6 +44,7 @@ public class MainFragment extends Fragment {
 
         }
     };
+    private AccessTokenTracker accessTokenTracker;
 
     public MainFragment() {
     }
@@ -53,6 +56,29 @@ public class MainFragment extends Fragment {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
+
+        accessToken.getCurrentAccessToken();
+        if (accessToken != null){
+            Log.d("UNO", "2");
+        }
+
+            accessTokenTracker = new AccessTokenTracker() {
+                @Override
+                protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
+                   if (accessToken1.getCurrentAccessToken() != null){
+                       Log.d("Logged in", "bro");
+                   }else{
+                       Log.d("Not logged in", "bro");
+                   }
+
+                }
+            };
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        accessTokenTracker.stopTracking();
     }
 
     @Override
@@ -64,6 +90,7 @@ public class MainFragment extends Fragment {
         loginButton.setFragment(this);
 
         loginButton.registerCallback(callbackManager, callback);
+
 
     }
 
