@@ -35,7 +35,6 @@
     self.makePasteField.delegate = self;
     //=====UI DECLARATION=====//
     [self setPasteValue:@""];
-    [self initHide];
     _bgImage = [UIImage imageNamed:@"ButtonBg.png"];
     _fbBgImage = [UIImage imageNamed:@"ButtonBgFb.png"];
     _loginManager = [[FBSDKLoginManager alloc] init];
@@ -48,7 +47,7 @@
     
     [_clipboardButton addTarget:self action:@selector(copyToClipboard) forControlEvents:UIControlEventTouchUpInside];
     
-    [_makeAPasteButton addTarget:self action:@selector(togglePaste) forControlEvents:UIControlEventTouchUpInside];
+    [_makeAPasteButton addTarget:self action:@selector(makeAPasteButtonMethod) forControlEvents:UIControlEventTouchUpInside];
     
     [_refreshButton addTarget:self action:@selector(refreshScreen) forControlEvents:UIControlEventTouchUpInside];
     
@@ -76,12 +75,8 @@
 
 -(void)setHide:(BOOL)isHidden{
     if (isHidden){
-        [self fadeOutAnimation:_loginStat];
-        [self fadeOutAnimation:_makeAPasteButton];
-        [self fadeOutAnimation:_mostRecentPaste];
-        [self fadeOutAnimation:_clipboardButton];
-        [self fadeOutAnimation:_makePasteField];
-        [self fadeOutAnimation:_refreshButton];
+        _mostRecentPaste.text = @"";
+        _loginStat.text = @"";
         [self stopSpinning];
     }else{
         _loginStat.alpha = 1.0f;
@@ -92,24 +87,37 @@
     }
 
 }
--(void)togglePaste{
-    if(!_isInPasteState){
-        _mostRecentPaste.alpha = 0;
-        _makePasteField.alpha = 1;
-        _loginStat.alpha = 0;
-        _refreshButton.alpha = 0;
-        _makePasteField.text = @"";
-        [_clipboardButton setTitle:@"Send" forState:UIControlStateNormal];
-        [_makeAPasteButton setTitle:@"Back" forState:UIControlStateNormal];
+-(void)makeAPasteButtonMethod{
+    if ([FBSDKAccessToken currentAccessToken]){
+        [self togglePaste];
     }else{
-        _mostRecentPaste.alpha = 1;
-        _makePasteField.alpha = 0;
-        _loginStat.alpha = 1;
-        _refreshButton.alpha = 1;
-        [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
-        [_makeAPasteButton setTitle:@"Make a Paste" forState:UIControlStateNormal];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unlock Full Functionality" message:@"To make pastes and view your past pastes, log in with Facebook!"  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
+        
+        [alert show];
     }
-    _isInPasteState = !_isInPasteState;
+    
+}
+-(void)togglePaste{
+    if ([FBSDKAccessToken currentAccessToken]){
+        if(!_isInPasteState){
+            _mostRecentPaste.alpha = 0;
+            _makePasteField.alpha = 1;
+            _loginStat.alpha = 0;
+            _refreshButton.alpha = 0;
+            _makePasteField.text = @"";
+            [_clipboardButton setTitle:@"Send" forState:UIControlStateNormal];
+            [_makeAPasteButton setTitle:@"Back" forState:UIControlStateNormal];
+        }else{
+            _mostRecentPaste.alpha = 1;
+            _makePasteField.alpha = 0;
+            _loginStat.alpha = 1;
+            _refreshButton.alpha = 1;
+            [_clipboardButton setTitle:@"Copy to Clipboard" forState:UIControlStateNormal];
+            [_makeAPasteButton setTitle:@"Make a Paste" forState:UIControlStateNormal];
+        }
+        _isInPasteState = !_isInPasteState;
+    }
+
 }
 
 
@@ -188,10 +196,10 @@
 -(void)fbMethod{
     //Double declaration because of race conditions
     if ([FBSDKAccessToken currentAccessToken]){
-        [_loginManager logOut];
         _isInPasteState = YES;
         [self togglePaste];
         [self setHide:YES];
+        [_loginManager logOut];
         [self setButtonTitle];
     }
     else if ([self isConnected]){
@@ -216,14 +224,22 @@
 }
 
 -(void)copyToClipboard{
-    if (!_isInPasteState){
-        NSString *copyValue = _mostRecentPaste.text;
-        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-        [pasteBoard setString:copyValue];
-        [ToastView showToast:self.view withText:@"Copied to Clipboard!" withDuaration:0.75];
+    if ([FBSDKAccessToken currentAccessToken]){
+        if (!_isInPasteState){
+            NSString *copyValue = _mostRecentPaste.text;
+            UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+            [pasteBoard setString:copyValue];
+            [ToastView showToast:self.view withText:@"Copied to Clipboard!" withDuaration:0.75];
+        }else{
+            [self sendPasteWithText:_makePasteField.text];
+        }
+        
     }else{
-        [self sendPasteWithText:_makePasteField.text];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unlock Full Functionality" message:@"To make pastes and view your past pastes, log in with Facebook!"  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
+        
+        [alert show];
     }
+
    
 }
 
@@ -252,15 +268,6 @@
     }
     
 }
-- (void)  loginButton:(FBSDKLoginButton *)loginButton
-didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
-                error:(NSError *)error{
-    
-}
-
-- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton{
-    
-}
 
 -(BOOL)canBecomeFirstResponder{
     return YES;
@@ -286,6 +293,23 @@ didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
         return NO;
     }else{
         return YES;
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1){
+        if ([self isConnected]){
+            [_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+                if (error){
+                } else if (result.isCancelled){
+                }else{
+                    [self loginProcedure];
+                    [self setButtonTitle];
+                }
+            }];
+        }else{
+            [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
+        }
     }
 }
 

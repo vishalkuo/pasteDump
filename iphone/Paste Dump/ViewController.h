@@ -10,7 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface ViewController : UIViewController <FBSDKLoginButtonDelegate, UITextFieldDelegate>
+@interface ViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) NSString *pasteValue;
 @property (strong, nonatomic) NSString *userId;
