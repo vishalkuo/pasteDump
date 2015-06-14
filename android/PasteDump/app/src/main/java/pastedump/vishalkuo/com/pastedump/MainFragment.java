@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -27,6 +28,7 @@ public class MainFragment extends Fragment {
 
     private CallbackManager callbackManager;
     private AccessToken accessToken;
+    private ProgressBar progressBar;
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
@@ -59,7 +61,7 @@ public class MainFragment extends Fragment {
 
         accessToken.getCurrentAccessToken();
         if (accessToken != null){
-            Log.d("UNO", "2");
+            new AsyncRecieve().execute();
         }
 
             accessTokenTracker = new AccessTokenTracker() {
