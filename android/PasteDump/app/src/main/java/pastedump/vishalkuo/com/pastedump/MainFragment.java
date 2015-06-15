@@ -1,14 +1,20 @@
 package pastedump.vishalkuo.com.pastedump;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -24,12 +30,20 @@ import com.facebook.login.widget.LoginButton;
 public class MainFragment extends Fragment {
 
     private CallbackManager callbackManager;
+    private AccessToken accessToken;
+    private ProgressBar progressBar;
+    private TextView textResult;
+    private TextView nameWelcome;
+    private Profile profile;
+    private Button pasteButton;
+    private Button clipboardButton;
+    private Button refreshButton;
+
+
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-            Log.d("YAY", profile.getName());
+            accessToken = loginResult.getAccessToken();
         }
 
         @Override
@@ -42,6 +56,7 @@ public class MainFragment extends Fragment {
 
         }
     };
+    private AccessTokenTracker accessTokenTracker;
 
     public MainFragment() {
     }
@@ -53,6 +68,35 @@ public class MainFragment extends Fragment {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
+
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
+               if (accessToken1.getCurrentAccessToken() != null){
+                   setHide(true);
+                   new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult, "1"
+                           , profile, nameWelcome, new AsyncFinish() {
+                       @Override
+                       public void asyncDidFinish() {
+                           setHide(false);
+                       }
+                   })
+                           .execute();
+               }else{
+                   setHide(true);
+               }
+
+            }
+        };
+
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        accessTokenTracker.stopTracking();
     }
 
     @Override
@@ -64,6 +108,42 @@ public class MainFragment extends Fragment {
         loginButton.setFragment(this);
 
         loginButton.registerCallback(callbackManager, callback);
+
+        progressBar = (ProgressBar)view.findViewById(R.id.progressSpinner);
+        textResult = (TextView)view.findViewById(R.id.pasteVal);
+        nameWelcome = (TextView)view.findViewById(R.id.nameVal);
+        pasteButton = (Button)view.findViewById(R.id.makePasteBtn);
+        clipboardButton = (Button)view.findViewById(R.id.clipboardBtn);
+        refreshButton = (Button)view.findViewById(R.id.refreshBtn);
+
+        final ClipboardManager clipboard = (ClipboardManager)getActivity().
+                getSystemService(Context.CLIPBOARD_SERVICE);
+
+
+
+        clipboardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipData data = ClipData.newPlainText("myText", textResult.getText());
+                clipboard.setPrimaryClip(data);
+            }
+        });
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (accessToken.getCurrentAccessToken() != null){
+                    setHide(true);
+                    new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult
+                            , "1", profile, nameWelcome, new AsyncFinish() {
+                        @Override
+                        public void asyncDidFinish() {
+                            setHide(false);
+                        }
+                    }).execute();
+                }
+            }
+        });
 
     }
 
@@ -79,5 +159,21 @@ public class MainFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void setHide(boolean isHidden){
+        if (isHidden){
+            nameWelcome.setVisibility(View.GONE);
+            textResult.setVisibility(View.GONE);
+            clipboardButton.setVisibility(View.GONE);
+            pasteButton.setVisibility(View.GONE);
+            refreshButton.setVisibility(View.GONE);
+        }else{
+            nameWelcome.setVisibility(View.VISIBLE);
+            textResult.setVisibility(View.VISIBLE);
+            clipboardButton.setVisibility(View.VISIBLE);
+            pasteButton.setVisibility(View.VISIBLE);
+            refreshButton.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -11,6 +11,63 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+
+
+
+    <TextView
+        android:id = "@+id/pasteVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:paddingLeft="200dp"
+        android:paddingRight="200dp"/>
+
+    <TextView
+        android:id = "@+id/nameVal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pasteVal"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"/>
+
+    <Button
+        android:id= "@+id/clipboardBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/pasteVal"
+        android:text = "Copy to Clipboard"/>
+
+    <Button
+        android:id = "@+id/makePasteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clipboardBtn"
+        android:layout_centerHorizontal="true"
+        android:text="Make a Paste"/>
+
+    <ProgressBar
+        android:id="@+id/progressSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style= "?android:attr/progressBarStyleLarge"
+        android:visibility="gone"/>
+
+    <Button
+        android:id = "@+id/refreshBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/makePasteBtn"
+        android:text = "Refresh"
+        android:layout_centerHorizontal="true"/>
+
 
 </RelativeLayout>
