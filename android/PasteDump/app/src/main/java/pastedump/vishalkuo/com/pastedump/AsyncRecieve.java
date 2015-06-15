@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.Profile;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,12 +38,19 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
     private String returnString;
     private JSONArray jarr;
     private String accessCode;
+    private Profile profile;
+    private TextView welcomeView;
+    public AsyncFinish delegate = null;
 
-    public AsyncRecieve(Context c, ProgressBar p, TextView t, String accessCode){
+    public AsyncRecieve(Context c, ProgressBar p, TextView t, String accessCode, Profile pr,
+                        TextView te, AsyncFinish a){
         this.progressBar = p;
         this.context = c;
         this.textView = t;
         this.accessCode = accessCode;
+        this.profile = pr;
+        this.welcomeView = te;
+        this.delegate = a;
     }
 
 
@@ -101,7 +111,7 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
     protected void onPostExecute(JSONArray result) {
         super.onPostExecute(result);
         progressBar.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
+
         switch (responseCode){
             case 0:case 3:
                 Toast.makeText(context, "Connection Error!", Toast.LENGTH_LONG).show();
@@ -115,8 +125,11 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
                     String responseVal = jsonObject.getString("response");
                     if (!responseVal.equals("100")){
                         String outputString = jsonObject.getString("paste");
-                        Log.d("test", outputString);
                         textView.setText(outputString);
+                        profile = Profile.getCurrentProfile();
+                        String welcomeString = "Welcome, " + profile.getFirstName() + ", your most recent paste was:";
+                        welcomeView.setText(welcomeString);
+                        delegate.asyncDidFinish();
                     }else {
                         Toast.makeText(context, "No pastes found!", Toast.LENGTH_LONG).show();
                     }
@@ -125,5 +138,6 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
                     Toast.makeText(context, "Something went wrong! Please try again later", Toast.LENGTH_LONG).show();
                 }
         }
+        textView.setVisibility(View.VISIBLE);
     }
 }
