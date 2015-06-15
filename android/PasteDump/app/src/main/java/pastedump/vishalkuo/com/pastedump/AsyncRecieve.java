@@ -2,6 +2,7 @@ package pastedump.vishalkuo.com.pastedump;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -114,6 +115,7 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
                     String responseVal = jsonObject.getString("response");
                     if (!responseVal.equals("100")){
                         String outputString = jsonObject.getString("paste");
+                        Log.d("test", outputString);
                         textView.setText(outputString);
                     }else {
                         Toast.makeText(context, "No pastes found!", Toast.LENGTH_LONG).show();

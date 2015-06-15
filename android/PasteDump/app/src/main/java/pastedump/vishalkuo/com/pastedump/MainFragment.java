@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -29,6 +30,8 @@ public class MainFragment extends Fragment {
     private CallbackManager callbackManager;
     private AccessToken accessToken;
     private ProgressBar progressBar;
+    private TextView textResult;
+
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
@@ -59,9 +62,10 @@ public class MainFragment extends Fragment {
 
         callbackManager = CallbackManager.Factory.create();
 
+
         accessToken.getCurrentAccessToken();
         if (accessToken != null){
-            new AsyncRecieve().execute();
+
         }
 
             accessTokenTracker = new AccessTokenTracker() {
@@ -69,8 +73,11 @@ public class MainFragment extends Fragment {
                 protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
                    if (accessToken1.getCurrentAccessToken() != null){
                        Log.d("Logged in", "bro");
+                       new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult, "1")
+                               .execute();
                    }else{
                        Log.d("Not logged in", "bro");
+                       textResult.setVisibility(View.GONE);
                    }
 
                 }
@@ -92,6 +99,9 @@ public class MainFragment extends Fragment {
         loginButton.setFragment(this);
 
         loginButton.registerCallback(callbackManager, callback);
+
+        progressBar = (ProgressBar)view.findViewById(R.id.progressSpinner);
+        textResult = (TextView)view.findViewById(R.id.pasteVal);
 
 
     }
