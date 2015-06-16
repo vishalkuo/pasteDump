@@ -21,7 +21,8 @@
 -(void)setButtonTitle;
 -(void)copyToClipboard;
 -(void)togglePaste;
--(void)loginProcedure;
+-(void)fbLoginProcedure;
+-(void)customAuthLoginProcedure:(BOOL)shouldBeCreated;
 @end
 
 @implementation ViewController
@@ -35,14 +36,12 @@
     self.makePasteField.delegate = self;
     //=====UI DECLARATION=====//
     [self setPasteValue:@""];
-    _bgImage = [UIImage imageNamed:@"ButtonBg.png"];
-    _fbBgImage = [UIImage imageNamed:@"ButtonBgFb.png"];
     _loginManager = [[FBSDKLoginManager alloc] init];
     
     
     
     [_facebookButton addTarget:self
-               action:@selector(fbMethod)
+               action:@selector(actionSheetInitializer)
      forControlEvents:UIControlEventTouchUpInside];
     
     [_clipboardButton addTarget:self action:@selector(copyToClipboard) forControlEvents:UIControlEventTouchUpInside];
@@ -50,6 +49,7 @@
     [_makeAPasteButton addTarget:self action:@selector(makeAPasteButtonMethod) forControlEvents:UIControlEventTouchUpInside];
     
     [_refreshButton addTarget:self action:@selector(refreshScreen) forControlEvents:UIControlEventTouchUpInside];
+    
     
     //=====POST INFO=====//
     _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
@@ -60,7 +60,10 @@
     
     //=====STATE ADJUSTMENT=====//
     if ([FBSDKAccessToken currentAccessToken]) {
-        [self loginProcedure];
+        [self fbLoginProcedure];
+        _isLoggedIn = NO;
+    }else if (_isLoggedIn){
+        [self customAuthLoginProcedure:YES];
     }else{
         [self stopSpinning];
         [self setHide:YES];
@@ -98,7 +101,7 @@
     
 }
 -(void)togglePaste{
-    if ([FBSDKAccessToken currentAccessToken]){
+    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
         if(!_isInPasteState){
             _mostRecentPaste.alpha = 0;
             _makePasteField.alpha = 1;
@@ -139,7 +142,7 @@
     _mostRecentPaste.text = val;
 }
 
--(void)loginProcedure{
+-(void)fbLoginProcedure{
     //=====FACEBOOK AUTHENTICATION=====//
     if ([self isConnected]){
         [self startSpinning];
@@ -186,15 +189,14 @@
 -(void)setButtonTitle{
     if ([FBSDKAccessToken currentAccessToken]) {
         [_facebookButton setTitle:@"Logout" forState:UIControlStateNormal];
-        [_facebookButton setBackgroundImage:_bgImage forState:UIControlStateNormal];
     }else{
-        [_facebookButton setTitle:@"" forState:UIControlStateNormal];
-        [_facebookButton setBackgroundImage:_fbBgImage forState:UIControlStateNormal];
+        [_facebookButton setTitle:@"Login" forState:UIControlStateNormal];
     }
 }
 
 -(void)fbMethod{
-    //Double declaration because of race conditions
+    //Double declaration because of race condition
+    
     if ([FBSDKAccessToken currentAccessToken]){
         _isInPasteState = YES;
         [self togglePaste];
@@ -207,13 +209,24 @@
             if (error){
             } else if (result.isCancelled){
             }else{
-                [self loginProcedure];
+                [self fbLoginProcedure];
                 [self setButtonTitle];
             }
         }];
     }else{
         [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
     }
+}
+
+-(void)actionSheetInitializer{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"How do you want to login?:"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Facebook", @"I Have An Account", @"Create An Account", nil];
+    actionSheet.tag = 1;
+    
+    [actionSheet showInView:self.view];
 }
 -(void)initHide{
     _loginStat.alpha = 0;
@@ -282,7 +295,7 @@
 -(void)refreshScreen{
     if ([self isConnected] && [FBSDKAccessToken currentAccessToken]){
         [ToastView showToast:self.view withText:@"Refreshing!" withDuaration:0.75];
-            [self loginProcedure];
+            [self fbLoginProcedure];
     }
 }
 
@@ -296,14 +309,15 @@
     }
 }
 
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1){
         if ([self isConnected]){
-            [_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            [_loginManager logInWithReadPermissions:@[@"publish_actions"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                 if (error){
                 } else if (result.isCancelled){
                 }else{
-                    [self loginProcedure];
+                    [self fbLoginProcedure];
                     [self setButtonTitle];
                 }
             }];
@@ -312,6 +326,32 @@
         }
     }
 }
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch(actionSheet.tag){
+        case 1:
+            switch(buttonIndex){
+                case 0:
+                    [self fbMethod];
+                    break;
+                case 1:
+                    [self customAuthLoginProcedure:false];
+                    break;
+                case 2:
+                    [self customAuthLoginProcedure:true];
+                    break;
+            }
+    }
+}
+
+-(void)customAuthLoginProcedure:(BOOL)shouldBeCreated{
+    if (!shouldBeCreated){
+        NSLog(@"I have an account");
+    }else{
+        NSLog(@"Create an account");
+    }
+}
+
 
 
 @end

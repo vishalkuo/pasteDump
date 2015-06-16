@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
+
+@interface ViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) NSString *pasteValue;
 @property (strong, nonatomic) NSString *userId;
@@ -26,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
 @property (weak, nonatomic) IBOutlet UITextField *makePasteField;
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+@property (weak, nonatomic) IBOutlet UIButton *fbShareButton;
 
 @property (nonatomic, assign) BOOL isInPasteState;
 @property (weak, nonatomic) NSDictionary *json;
@@ -35,6 +38,7 @@
 @property (weak, nonatomic) NSData *data;
 @property (strong, nonatomic) NSURL *url;
 @property (strong, nonatomic) FBSDKLoginManager* loginManager;
+@property (nonatomic, assign) BOOL isLoggedIn;
 
 @property (readonly) UIImage *bgImage;
 @property (readonly) UIImage *fbBgImage;
