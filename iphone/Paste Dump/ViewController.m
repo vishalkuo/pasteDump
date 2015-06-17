@@ -52,7 +52,7 @@
     
     
     //=====POST INFO=====//
-    _url = [NSURL URLWithString:@"http://www.vishalkuo.com/pastebin.php"];
+    _url = [NSURL URLWithString:@"http://vishalkuo.com/pastebin.php"];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     _session = [NSURLSession sessionWithConfiguration:config];
     _req = [[NSMutableURLRequest alloc] initWithURL:_url];
@@ -151,9 +151,9 @@
              if (!error) {
                  _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", result[@"first_name"]];
                  _userId = result[@"id"];
-                 
                  //=====DECLARATION FOR POST REQUEST=====//
                  NSString *postString =  [NSString stringWithFormat:@"id=%@&code=0", _userId];
+                
                  NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
                  if(!error){
                      _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -196,8 +196,8 @@
 
 -(void)fbMethod{
     //Double declaration because of race condition
-    
-    if ([FBSDKAccessToken currentAccessToken]){
+
+    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
         _isInPasteState = YES;
         [self togglePaste];
         [self setHide:YES];
@@ -219,14 +219,21 @@
 }
 
 -(void)actionSheetInitializer{
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"How do you want to login?:"
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"How do you want to login?"
                                                              delegate:self
                                                     cancelButtonTitle:@"Cancel"
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:@"Facebook", @"I Have An Account", @"Create An Account", nil];
     actionSheet.tag = 1;
     
-    [actionSheet showInView:self.view];
+    UIActionSheet *logoutSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to logout?"delegate:self cancelButtonTitle:@"No" destructiveButtonTitle:nil otherButtonTitles:@"Yes", nil];
+    logoutSheet.tag = 2;
+
+    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
+        [logoutSheet showInView:self.view];
+    }else{
+        [actionSheet showInView:self.view];
+    }
 }
 -(void)initHide{
     _loginStat.alpha = 0;
@@ -311,9 +318,11 @@
 
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1){
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:@"Log In"]){
         if ([self isConnected]){
-            [_loginManager logInWithReadPermissions:@[@"publish_actions"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            [_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                 if (error){
                 } else if (result.isCancelled){
                 }else{
@@ -324,6 +333,9 @@
         }else{
             [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
         }
+    }else if ([title isEqualToString:@"Sign Up"]){
+        UITextField *username = [alertView textFieldAtIndex:0];
+        UITextField *password = [alertView textFieldAtIndex:1];
     }
 }
 
@@ -341,15 +353,37 @@
                     [self customAuthLoginProcedure:true];
                     break;
             }
+            break;
+        case 2:
+            switch(buttonIndex){
+                case 0:
+                    [self fbMethod];
+                    break;
+            }
     }
 }
 
 -(void)customAuthLoginProcedure:(BOOL)shouldBeCreated{
     if (!shouldBeCreated){
-        NSLog(@"I have an account");
+        [self oldUserLogin];
     }else{
-        NSLog(@"Create an account");
+        [self newUserSetup];
     }
+}
+
+-(void)newUserSetup{
+    UIAlertView *setup = [[UIAlertView alloc] initWithTitle:@"Sign Up" message:@"Enter your username and password" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign Up", nil];
+    setup.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [setup textFieldAtIndex:0].delegate = self;
+    [setup show];
+}
+
+-(void)oldUserLogin{
+    UIAlertView *login = [[UIAlertView alloc] initWithTitle:@"Welcome Back" message:@"Enter your username and password" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Sign In", nil];
+    login.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+    [login textFieldAtIndex:0].delegate = self;
+    [login show];
+    
 }
 
 

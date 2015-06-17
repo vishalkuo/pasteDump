@@ -17,6 +17,10 @@
 		E580E02F1B30DBB400979C80 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E580E02E1B30DBB400979C80 /* FBSDKShareKit.framework */; };
 		E580E0311B30E41400979C80 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E580E0301B30E41400979C80 /* FBSDKMessengerShareKit.framework */; };
 		E5C197BB1B12DD1100000BA0 /* ToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C197BA1B12DD1100000BA0 /* ToastView.m */; };
+		E5C6922C1B30F79E00397272 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C692281B30F79E00397272 /* Bolts.framework */; };
+		E5C6922D1B30F79E00397272 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C692291B30F79E00397272 /* FBAudienceNetwork.framework */; };
+		E5C6922E1B30F79E00397272 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C6922A1B30F79E00397272 /* FBSDKCoreKit.framework */; };
+		E5C6922F1B30F79E00397272 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C6922B1B30F79E00397272 /* FBSDKLoginKit.framework */; };
 		E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = E5CBBF791B0ED4A60031774F /* ButtonBg.png */; };
 		E5EE91A01AFFC0C400DCD4A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE919F1AFFC0C400DCD4A5 /* main.m */; };
 		E5EE91A31AFFC0C400DCD4A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */; };
@@ -25,10 +29,6 @@
 		E5EE91AB1AFFC0C500DCD4A5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */; };
 		E5EE91AE1AFFC0C500DCD4A5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */; };
 		E5EE91BA1AFFC0C500DCD4A5 /* Paste_DumpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91B91AFFC0C500DCD4A5 /* Paste_DumpTests.m */; };
-		E5EE91C41AFFC46500DCD4A5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C31AFFC46500DCD4A5 /* FBSDKCoreKit.framework */; };
-		E5EE91CA1AFFC4A900DCD4A5 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C51AFFC4A900DCD4A5 /* Bolts.framework */; };
-		E5EE91CB1AFFC4A900DCD4A5 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C61AFFC4A900DCD4A5 /* FBAudienceNetwork.framework */; };
-		E5EE91CC1AFFC4A900DCD4A5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */; };
 		E5F9447C1B13F5A3008207C7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5F9447B1B13F5A3008207C7 /* Launch.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +56,10 @@
 		E580E0301B30E41400979C80 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
 		E5C197B91B12DD1100000BA0 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
 		E5C197BA1B12DD1100000BA0 /* ToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastView.m; sourceTree = "<group>"; };
+		E5C692281B30F79E00397272 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		E5C692291B30F79E00397272 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBAudienceNetwork.framework; sourceTree = "<group>"; };
+		E5C6922A1B30F79E00397272 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		E5C6922B1B30F79E00397272 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E5CBBF791B0ED4A60031774F /* ButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonBg.png; sourceTree = "<group>"; };
 		E5EE919A1AFFC0C400DCD4A5 /* Paste Dump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Paste Dump.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EE919E1AFFC0C400DCD4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,10 +74,6 @@
 		E5EE91B31AFFC0C500DCD4A5 /* Paste DumpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Paste DumpTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EE91B81AFFC0C500DCD4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5EE91B91AFFC0C500DCD4A5 /* Paste_DumpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Paste_DumpTests.m; sourceTree = "<group>"; };
-		E5EE91C31AFFC46500DCD4A5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		E5EE91C51AFFC4A900DCD4A5 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
-		E5EE91C61AFFC4A900DCD4A5 /* FBAudienceNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBAudienceNetwork.framework; path = ../../FacebookSDK/FBAudienceNetwork.framework; sourceTree = "<group>"; };
-		E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E5F9447B1B13F5A3008207C7 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -83,12 +83,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E580E02F1B30DBB400979C80 /* FBSDKShareKit.framework in Frameworks */,
+				E5C6922E1B30F79E00397272 /* FBSDKCoreKit.framework in Frameworks */,
 				E51001D81B13F9EE00ADCDDE /* SystemConfiguration.framework in Frameworks */,
-				E5EE91CA1AFFC4A900DCD4A5 /* Bolts.framework in Frameworks */,
-				E5EE91CB1AFFC4A900DCD4A5 /* FBAudienceNetwork.framework in Frameworks */,
-				E5EE91CC1AFFC4A900DCD4A5 /* FBSDKLoginKit.framework in Frameworks */,
-				E5EE91C41AFFC46500DCD4A5 /* FBSDKCoreKit.framework in Frameworks */,
 				E580E0311B30E41400979C80 /* FBSDKMessengerShareKit.framework in Frameworks */,
+				E5C6922F1B30F79E00397272 /* FBSDKLoginKit.framework in Frameworks */,
+				E5C6922D1B30F79E00397272 /* FBAudienceNetwork.framework in Frameworks */,
+				E5C6922C1B30F79E00397272 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +105,10 @@
 		E5EE91911AFFC0C400DCD4A5 = {
 			isa = PBXGroup;
 			children = (
+				E5C692281B30F79E00397272 /* Bolts.framework */,
+				E5C692291B30F79E00397272 /* FBAudienceNetwork.framework */,
+				E5C6922A1B30F79E00397272 /* FBSDKCoreKit.framework */,
+				E5C6922B1B30F79E00397272 /* FBSDKLoginKit.framework */,
 				E580E0301B30E41400979C80 /* FBSDKMessengerShareKit.framework */,
 				E51001D71B13F9EE00ADCDDE /* SystemConfiguration.framework */,
 				E5CBBF791B0ED4A60031774F /* ButtonBg.png */,
@@ -113,11 +117,7 @@
 				E50E24921B1129F000A0EAF8 /* ButtonBgFb.png */,
 				E580E02C1B30D98500979C80 /* fb.png */,
 				E5162AEE1B13E25F00DAB45D /* refresh.png */,
-				E5EE91C51AFFC4A900DCD4A5 /* Bolts.framework */,
-				E5EE91C61AFFC4A900DCD4A5 /* FBAudienceNetwork.framework */,
-				E5EE91C71AFFC4A900DCD4A5 /* FBSDKLoginKit.framework */,
 				E580E02E1B30DBB400979C80 /* FBSDKShareKit.framework */,
-				E5EE91C31AFFC46500DCD4A5 /* FBSDKCoreKit.framework */,
 				E5EE919C1AFFC0C400DCD4A5 /* Paste Dump */,
 				E5EE91B61AFFC0C500DCD4A5 /* Paste DumpTests */,
 				E5EE919B1AFFC0C400DCD4A5 /* Products */,
