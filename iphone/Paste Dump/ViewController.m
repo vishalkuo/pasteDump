@@ -152,9 +152,9 @@
                  _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", result[@"first_name"]];
                  _userId = result[@"id"];
                  //=====DECLARATION FOR POST REQUEST=====//
-                 NSString *postString =  [NSString stringWithFormat:@"id=%@&code=0", _userId];
-                
-                 NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
+                 NSString *postString =  [NSString stringWithFormat:@"id=%@&code=0\n", _userId];
+                 NSData *data = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+                 NSLog(postString);
                  if(!error){
                      _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
