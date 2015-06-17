@@ -11,6 +11,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "ToastView.h"
 #import "Reachability.h"
+#import "AFNetworking.h"
 
 @interface ViewController ()
 
