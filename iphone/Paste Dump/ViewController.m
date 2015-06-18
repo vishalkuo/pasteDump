@@ -12,6 +12,7 @@
 #import "ToastView.h"
 #import "Reachability.h"
 #import "AFNetworking.h"
+#import "ViewController+Handler.h"
 
 @interface ViewController ()
 
@@ -58,6 +59,7 @@
     _session = [NSURLSession sessionWithConfiguration:config];
     _req = [[NSMutableURLRequest alloc] initWithURL:_url];
     _req.HTTPMethod = @"POST";
+
     
     //=====STATE ADJUSTMENT=====//
     if ([FBSDKAccessToken currentAccessToken]) {
@@ -155,7 +157,6 @@
                  //=====DECLARATION FOR POST REQUEST=====//
                  NSString *postString =  [NSString stringWithFormat:@"id=%@&code=0\n", _userId];
                  NSData *data = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-                 NSLog(postString);
                  if(!error){
                      _uploadTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                          _json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -215,7 +216,7 @@
             }
         }];
     }else{
-        [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
+        
     }
 }
 
@@ -229,12 +230,17 @@
     
     UIActionSheet *logoutSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to logout?"delegate:self cancelButtonTitle:@"No" destructiveButtonTitle:nil otherButtonTitles:@"Yes", nil];
     logoutSheet.tag = 2;
-
-    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
-        [logoutSheet showInView:self.view];
+    
+    if ([self isConnected]){
+        if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
+            [logoutSheet showInView:self.view];
+        }else{
+            [actionSheet showInView:self.view];
+        }
     }else{
-        [actionSheet showInView:self.view];
+        [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
     }
+    
 }
 -(void)initHide{
     _loginStat.alpha = 0;
@@ -337,6 +343,17 @@
     }else if ([title isEqualToString:@"Sign Up"]){
         UITextField *username = [alertView textFieldAtIndex:0];
         UITextField *password = [alertView textFieldAtIndex:1];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSDictionary *params = @{@"id":username.text, @"code": @"0", @"password":password.text};
+        [manager POST:@"http://vishalkuo.com/signup.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             NSArray *resp = responseObject;
+            [self confirmNewUser:resp :self.view];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+        }];
+        
     }
 }
 
@@ -386,6 +403,7 @@
     [login show];
     
 }
+
 
 
 
