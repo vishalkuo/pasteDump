@@ -343,17 +343,22 @@
     }else if ([title isEqualToString:@"Sign Up"]){
         UITextField *username = [alertView textFieldAtIndex:0];
         UITextField *password = [alertView textFieldAtIndex:1];
+        NSString *userString = username.text;
+        NSString *passString = password.text;
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSDictionary *params = @{@"id":username.text, @"code": @"0", @"password":password.text};
-        [manager POST:@"http://vishalkuo.com/signup.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             NSArray *resp = responseObject;
-            [self confirmNewUser:resp :self.view];
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
-        
+        if (![self stringIsNotNull:userString] || ![self stringIsNotNull:passString]){
+            [ToastView showToast:self.view withText:@"Fields cannot be empty!" withDuaration:1.0];
+        }else{
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            NSDictionary *params = @{@"id":username.text, @"code": @"0", @"password":password.text};
+            [manager POST:@"http://vishalkuo.com/signup.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSArray *resp = responseObject;
+                [self confirmNewUser:resp :self.view];
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"Error: %@", error);
+            }];
+        }
     }
 }
 

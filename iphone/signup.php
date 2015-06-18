@@ -5,6 +5,7 @@
     $newdb = 'vishzlkf_pastedump';
     $message = $_POST;
     $id = $message['id'];
+    $pass = $message['password'];
     $output;
     $query;
     mysql_connect(localhost, $username, $password);
@@ -16,12 +17,13 @@
 
     $r = mysql_query($query);
 
-
-    
-
-
      while ($response = mysql_fetch_assoc($r)){
         $output[] = $response;
+    }
+
+    if (mysql_fetch_array($r)[0] == 0){
+        $query = "INSERT INTO `pastebin` (id, password) VALUES('$id', '$pass')";
+        mysql_query($query);
     }
 
      echo json_encode($output); 

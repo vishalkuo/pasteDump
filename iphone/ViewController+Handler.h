@@ -10,6 +10,9 @@
 
 @interface ViewController (Handler)
 
--(void)confirmNewUser:(NSArray *)jsonVal:(UIView *)view;
+- (void)confirmNewUser:(NSArray *) jsonVal :(UIView *)view;
+
+-(BOOL)stringIsNotNull:(NSString *)checkString;
+
 
 @end

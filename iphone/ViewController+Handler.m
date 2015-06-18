@@ -11,20 +11,22 @@
 
 @implementation ViewController (Handler)
 
-/*-(void)confirmNewUser:(NSArray*)jsonVal{
-    NSDictionary *dict = jsonVal[0];
-    NSInteger *responseInt = [[dict valueForKey:@"COUNT(1)"] integerValue];
-    if (responseInt == 0){
-        [ToastView showToast:self withText:@"Success!" withDuaration:1.0];
-    }
-}*/
-
 -(void)confirmNewUser:(NSArray *)jsonVal :(UIView *)view{
     NSDictionary *dict = jsonVal[0];
     NSString *response = [dict valueForKey:@"COUNT(1)"];
     if ([response isEqualToString:@"0"]){
         
         [ToastView showToast:view withText:@"Success!" withDuaration:1.0];
+    }else{
+        [ToastView showToast:view withText:@"This username is taken!" withDuaration:1.0];   
+    }
+}
+
+-(BOOL)stringIsNotNull:(NSString *)checkString{
+    if (checkString == (id)[NSNull null] || checkString.length == 0){
+        return NO;
+    }else{
+        return YES;
     }
 }
 
