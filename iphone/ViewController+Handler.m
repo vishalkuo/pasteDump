@@ -11,14 +11,15 @@
 
 @implementation ViewController (Handler)
 
--(void)confirmNewUser:(NSArray *)jsonVal :(UIView *)view{
+-(BOOL)confirmNewUser:(NSArray *)jsonVal :(UIView *)view{
     NSDictionary *dict = jsonVal[0];
     NSString *response = [dict valueForKey:@"COUNT(1)"];
     if ([response isEqualToString:@"0"]){
-        
         [ToastView showToast:view withText:@"Success!" withDuaration:1.0];
+        return YES;
     }else{
-        [ToastView showToast:view withText:@"This username is taken!" withDuaration:1.0];   
+        [ToastView showToast:view withText:@"This username is taken!" withDuaration:1.0];
+        return NO;
     }
 }
 
@@ -29,5 +30,33 @@
         return YES;
     }
 }
+
+-(NSString *)fetchMostRecentPasteString:(NSString *)username password:(NSString *)password{
+    __block NSString *returnValue = nil;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSString *userString = [NSString stringWithFormat:@"'%@'", username];
+    NSDictionary *params = @{@"id":userString, @"code": @"0"};
+    [manager POST:@"http://vishalkuo.com/pastebin.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *resp = responseObject;
+        NSDictionary *dict = resp[0];
+        NSString *response = [dict valueForKey:@"response"];
+        if ([response integerValue] == 0){
+            returnValue = [dict valueForKey:@"paste"];
+        }else{
+            returnValue = [dict valueForKey:@"No Recent Pastes Found"];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [ToastView showToast:self.view withText:@"Something went wrong!" withDuaration:1.0];
+    }];
+    if ([self stringIsNotNull:returnValue]){
+        return returnValue;
+    }else{
+        return @"No Recent Pastes Found";
+    }
+    
+}
+
+
 
 @end

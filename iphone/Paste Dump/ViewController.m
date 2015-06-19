@@ -94,7 +94,7 @@
 
 }
 -(void)makeAPasteButtonMethod{
-    if ([FBSDKAccessToken currentAccessToken]){
+    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
         [self togglePaste];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unlock Full Functionality" message:@"To make pastes and view your past pastes, log in with Facebook!"  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
@@ -251,7 +251,7 @@
 }
 
 -(void)copyToClipboard{
-    if ([FBSDKAccessToken currentAccessToken]){
+    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
         if (!_isInPasteState){
             NSString *copyValue = _mostRecentPaste.text;
             UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
@@ -268,9 +268,6 @@
     }
 
    
-}
-
-- (IBAction)unwindFromConfirmationForm:(UIStoryboardSegue *)segue {
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -353,12 +350,21 @@
             NSDictionary *params = @{@"id":username.text, @"code": @"0", @"password":password.text};
             [manager POST:@"http://vishalkuo.com/signup.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSArray *resp = responseObject;
-                [self confirmNewUser:resp :self.view];
-                
+                BOOL isGood = [self confirmNewUser:resp :self.view];
+                if (isGood){
+                    [self loginCustom:userString password:passString];
+                }
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"Error: %@", error);
             }];
         }
+    }else if ([title isEqualToString:@"Sign In"]){
+        UITextField *username = [alertView textFieldAtIndex:0];
+        UITextField *password = [alertView textFieldAtIndex:1];
+        NSString *userString = username.text;
+        NSString *passString = password.text;
+        
+        [self loginCustom:userString password:passString];
     }
 }
 
@@ -409,7 +415,32 @@
     
 }
 
+-(void)loginCustom:(NSString *)usernameText password:(NSString *)passwordText{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *params = @{@"id":usernameText, @"code": @"0", @"password":passwordText};
+    [manager POST:@"http://vishalkuo.com/auth.php" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *resp = responseObject;
+        NSDictionary *dict = resp[0];
+        NSString *response = [dict valueForKey:@"response"];
+        if ([response integerValue] == 0){
+            NSString *pasteValue = [self fetchMostRecentPasteString:usernameText password:passwordText];
+            [self welcomeHomeUser:pasteValue loginName:usernameText];
+        }else{
+            [ToastView showToast:self.view withText:@"Incorrect Username or Password" withDuaration:1.0];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [ToastView showToast:self.view withText:@"Something went wrong!" withDuaration:1.0];
+    }];
+    
+}
 
-
+-(void)welcomeHomeUser:(NSString *)pasteValue loginName:(NSString *)username{
+    _isLoggedIn = YES;
+    _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", username];
+    _mostRecentPaste.text = pasteValue;
+    [_facebookButton setTitle:@"Logout" forState:UIControlStateNormal];
+    
+}
 
 @end

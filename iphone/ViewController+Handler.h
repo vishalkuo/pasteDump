@@ -10,9 +10,10 @@
 
 @interface ViewController (Handler)
 
-- (void)confirmNewUser:(NSArray *) jsonVal :(UIView *)view;
+- (BOOL)confirmNewUser:(NSArray *) jsonVal :(UIView *)view;
 
 -(BOOL)stringIsNotNull:(NSString *)checkString;
 
+-(NSString *)fetchMostRecentPasteString:(NSString *)username password:(NSString *)password;
 
 @end

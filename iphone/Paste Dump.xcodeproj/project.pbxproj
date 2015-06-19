@@ -34,6 +34,7 @@
 		E580E02D1B30D98500979C80 /* fb.png in Resources */ = {isa = PBXBuildFile; fileRef = E580E02C1B30D98500979C80 /* fb.png */; };
 		E580E02F1B30DBB400979C80 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E580E02E1B30DBB400979C80 /* FBSDKShareKit.framework */; };
 		E580E0311B30E41400979C80 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E580E0301B30E41400979C80 /* FBSDKMessengerShareKit.framework */; };
+		E5ADD3A81B33A0D80088C929 /* Laynch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5ADD3A71B33A0D80088C929 /* Laynch.storyboard */; };
 		E5C197BB1B12DD1100000BA0 /* ToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C197BA1B12DD1100000BA0 /* ToastView.m */; };
 		E5C6922C1B30F79E00397272 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C692281B30F79E00397272 /* Bolts.framework */; };
 		E5C6922D1B30F79E00397272 /* FBAudienceNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5C692291B30F79E00397272 /* FBAudienceNetwork.framework */; };
@@ -47,7 +48,6 @@
 		E5EE91AB1AFFC0C500DCD4A5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */; };
 		E5EE91AE1AFFC0C500DCD4A5 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */; };
 		E5EE91BA1AFFC0C500DCD4A5 /* Paste_DumpTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5EE91B91AFFC0C500DCD4A5 /* Paste_DumpTests.m */; };
-		E5F9447C1B13F5A3008207C7 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5F9447B1B13F5A3008207C7 /* Launch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +110,7 @@
 		E580E02C1B30D98500979C80 /* fb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fb.png; path = "Paste Dump/fb.png"; sourceTree = "<group>"; };
 		E580E02E1B30DBB400979C80 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		E580E0301B30E41400979C80 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKMessengerShareKit.framework; sourceTree = "<group>"; };
+		E5ADD3A71B33A0D80088C929 /* Laynch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Laynch.storyboard; sourceTree = "<group>"; };
 		E5C197B91B12DD1100000BA0 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
 		E5C197BA1B12DD1100000BA0 /* ToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastView.m; sourceTree = "<group>"; };
 		E5C692281B30F79E00397272 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -130,7 +131,6 @@
 		E5EE91B31AFFC0C500DCD4A5 /* Paste DumpTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Paste DumpTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EE91B81AFFC0C500DCD4A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5EE91B91AFFC0C500DCD4A5 /* Paste_DumpTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Paste_DumpTests.m; sourceTree = "<group>"; };
-		E5F9447B1B13F5A3008207C7 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,17 +247,17 @@
 				E5EE91A21AFFC0C400DCD4A5 /* AppDelegate.m */,
 				E51001DC1B13FC4600ADCDDE /* Reachability.h */,
 				E51001DD1B13FC4600ADCDDE /* Reachability.m */,
-				E5700DF31B325E21006390E3 /* ViewController+Handler.h */,
-				E5700DF41B325E21006390E3 /* ViewController+Handler.m */,
 				E5C197B91B12DD1100000BA0 /* ToastView.h */,
 				E5C197BA1B12DD1100000BA0 /* ToastView.m */,
+				E5700DF31B325E21006390E3 /* ViewController+Handler.h */,
+				E5700DF41B325E21006390E3 /* ViewController+Handler.m */,
+				E5ADD3A71B33A0D80088C929 /* Laynch.storyboard */,
 				E5EE91A41AFFC0C400DCD4A5 /* ViewController.h */,
 				E5EE91A51AFFC0C400DCD4A5 /* ViewController.m */,
 				E5700DB91B3236ED006390E3 /* AFNetworking */,
 				E5700DCD1B3236ED006390E3 /* UIKit+AFNetworking */,
 				E5EE91AA1AFFC0C500DCD4A5 /* Images.xcassets */,
 				E5EE91A71AFFC0C500DCD4A5 /* Main.storyboard */,
-				E5F9447B1B13F5A3008207C7 /* Launch.storyboard */,
 				E5EE91AC1AFFC0C500DCD4A5 /* LaunchScreen.xib */,
 				E5EE919D1AFFC0C400DCD4A5 /* Supporting Files */,
 			);
@@ -372,8 +372,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5CBBF7A1B0ED4A60031774F /* ButtonBg.png in Resources */,
+				E5ADD3A81B33A0D80088C929 /* Laynch.storyboard in Resources */,
 				E519B21A1B121B3A00C5AA7B /* title.png in Resources */,
-				E5F9447C1B13F5A3008207C7 /* Launch.storyboard in Resources */,
 				E50E24931B1129F000A0EAF8 /* ButtonBgFb.png in Resources */,
 				E5EE91A91AFFC0C500DCD4A5 /* Main.storyboard in Resources */,
 				E580E02D1B30D98500979C80 /* fb.png in Resources */,
