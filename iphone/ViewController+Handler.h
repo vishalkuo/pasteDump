@@ -14,6 +14,9 @@
 
 -(BOOL)stringIsNotNull:(NSString *)checkString;
 
--(NSString *)fetchMostRecentPasteString:(NSString *)username password:(NSString *)password;
+-(NSString *)fetchMostRecentPasteString:(NSString *)username;
+
+-(void)saveLoginData:(NSString *)username;
+
 
 @end

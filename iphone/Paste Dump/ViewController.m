@@ -32,6 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _isLoggedIn = [defaults boolForKey:@"isLoggedIn"];
+    
     _isInPasteState = NO;
     [_makePasteField setReturnKeyType:UIReturnKeySend];
     
@@ -64,9 +67,12 @@
     //=====STATE ADJUSTMENT=====//
     if ([FBSDKAccessToken currentAccessToken]) {
         [self fbLoginProcedure];
-        _isLoggedIn = NO;
     }else if (_isLoggedIn){
-        [self customAuthLoginProcedure:YES];
+        //[self customAuthLoginProcedure:YES];
+        NSString *username = [defaults valueForKey:@"Username"];
+        NSString *pasteValue = [self fetchMostRecentPasteString:username];
+        NSLog(pasteValue);
+        [self welcomeHomeUser:pasteValue loginName:username];
     }else{
         [self stopSpinning];
         [self setHide:YES];
@@ -189,7 +195,7 @@
 }
 
 -(void)setButtonTitle{
-    if ([FBSDKAccessToken currentAccessToken]) {
+    if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn) {
         [_facebookButton setTitle:@"Logout" forState:UIControlStateNormal];
     }else{
         [_facebookButton setTitle:@"Login" forState:UIControlStateNormal];
@@ -198,9 +204,12 @@
 
 -(void)fbMethod{
     //Double declaration because of race condition
-
+    
     if ([FBSDKAccessToken currentAccessToken] || _isLoggedIn){
         _isInPasteState = YES;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        _isLoggedIn = NO;
+        [defaults setBool:NO forKey:@"isLoggedIn"];
         [self togglePaste];
         [self setHide:YES];
         [_loginManager logOut];
@@ -277,7 +286,14 @@
 }
 
 -(void)sendPasteWithText:(NSString *)sendValue{
-    NSString *postString = [NSString stringWithFormat:@"id=%@&code=1&paste=%@", _userId, sendValue];
+    NSString *postString = nil;
+    if (_isLoggedIn){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *username = [defaults valueForKey:@"Username"];
+        postString = [NSString stringWithFormat:@"id=%@&code=1&paste=%@", username, sendValue];
+    }else{
+        postString = [NSString stringWithFormat:@"id=%@&code=1&paste=%@", _userId, sendValue];
+    }
     NSData *data = [postString dataUsingEncoding:NSUTF8StringEncoding];
     _pasteTask = [_session uploadTaskWithRequest:_req fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         (dispatch_async(dispatch_get_main_queue(), ^{
@@ -298,15 +314,21 @@
 }
 
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
-    if(motion == UIEventSubtypeMotionShake && [FBSDKAccessToken currentAccessToken]){
+    if(motion == UIEventSubtypeMotionShake && ([FBSDKAccessToken currentAccessToken] || _isLoggedIn)){
         [self refreshScreen];
     }
 }
 
 -(void)refreshScreen{
-    if ([self isConnected] && [FBSDKAccessToken currentAccessToken]){
+    if ([self isConnected] && ([FBSDKAccessToken currentAccessToken] || _isLoggedIn)){
         [ToastView showToast:self.view withText:@"Refreshing!" withDuaration:0.75];
+        if ([FBSDKAccessToken currentAccessToken]){
             [self fbLoginProcedure];
+        }else{
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [self fetchMostRecentPasteString:[defaults valueForKey:@"Username"]];
+        }
+        
     }
 }
 
@@ -423,7 +445,7 @@
         NSDictionary *dict = resp[0];
         NSString *response = [dict valueForKey:@"response"];
         if ([response integerValue] == 0){
-            NSString *pasteValue = [self fetchMostRecentPasteString:usernameText password:passwordText];
+            NSString *pasteValue = [self fetchMostRecentPasteString:usernameText];
             [self welcomeHomeUser:pasteValue loginName:usernameText];
         }else{
             [ToastView showToast:self.view withText:@"Incorrect Username or Password" withDuaration:1.0];
@@ -437,9 +459,10 @@
 
 -(void)welcomeHomeUser:(NSString *)pasteValue loginName:(NSString *)username{
     _isLoggedIn = YES;
+    [self saveLoginData:username];
     _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", username];
     _mostRecentPaste.text = pasteValue;
-    [_facebookButton setTitle:@"Logout" forState:UIControlStateNormal];
+    [self setButtonTitle];
     
 }
 

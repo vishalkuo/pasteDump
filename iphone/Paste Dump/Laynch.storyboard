@@ -23,7 +23,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made With Love" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-PH-cM6">
-                                <rect key="frame" x="229" y="264" width="122" height="21"/>
+                                <rect key="frame" x="232" y="264" width="116" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -34,7 +34,7 @@
                             <constraint firstAttribute="centerY" secondItem="e1C-PH-cM6" secondAttribute="centerY" constant="25.5" id="079-jY-4Sh"/>
                             <constraint firstAttribute="centerY" secondItem="3UZ-hJ-fKR" secondAttribute="centerY" id="7a6-zx-lug"/>
                             <constraint firstItem="3UZ-hJ-fKR" firstAttribute="top" secondItem="e1C-PH-cM6" secondAttribute="bottom" constant="-16" id="Ilt-bM-Y8W"/>
-                            <constraint firstAttribute="centerX" secondItem="e1C-PH-cM6" secondAttribute="centerX" constant="13.5" id="ao0-pi-qF0"/>
+                            <constraint firstAttribute="centerX" secondItem="e1C-PH-cM6" secondAttribute="centerX" constant="10" id="ao0-pi-qF0"/>
                             <constraint firstAttribute="centerX" secondItem="3UZ-hJ-fKR" secondAttribute="centerX" id="jfT-qN-ez2"/>
                         </constraints>
                     </view>
