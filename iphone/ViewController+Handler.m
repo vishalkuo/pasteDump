@@ -31,8 +31,7 @@
     }
 }
 
--(NSString *)fetchMostRecentPasteString:(NSString *)username{
-    __block NSString *returnValue = nil;
+-(NSString *)fetchMostRecentPasteString:(NSString *)username withBlock:(void (^)(NSString *myString))block{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSString *userString = [NSString stringWithFormat:@"'%@'", username];
     NSDictionary *params = @{@"id":userString, @"code": @"0"};
@@ -41,22 +40,20 @@
         NSDictionary *dict = resp[0];
         NSString *response = [dict valueForKey:@"response"];
         if ([response integerValue] == 0){
-            returnValue = [dict valueForKey:@"paste"];
+            NSString *test = [dict valueForKey:@"paste"];
+            block(test);
         }else{
-            returnValue = @"No Recent Pastes Found";
+            NSString *test = @"No Recent Pastes Found";
+            block(test);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [ToastView showToast:self.view withText:@"Something went wrong!" withDuaration:1.0];
     }];
-    if ([self stringIsNotNull:returnValue]){
-        return @"No Recent Pastes Found";
-    }else{
-        NSLog(@"HERE");
-        return returnValue;
-    }
+    return @"No Recent Pastes Found";
     
 }
+
 
 -(void)saveLoginData:(NSString *)username{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

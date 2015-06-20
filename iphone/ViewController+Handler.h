@@ -14,9 +14,10 @@
 
 -(BOOL)stringIsNotNull:(NSString *)checkString;
 
--(NSString *)fetchMostRecentPasteString:(NSString *)username;
+-(NSString *)fetchMostRecentPasteString:(NSString *)username withBlock:(void (^)(NSString *myString))block;
 
 -(void)saveLoginData:(NSString *)username;
 
+@property (weak, nonatomic) NSString *pasteValue;
 
 @end

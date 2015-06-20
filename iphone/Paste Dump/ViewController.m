@@ -70,9 +70,11 @@
     }else if (_isLoggedIn){
         //[self customAuthLoginProcedure:YES];
         NSString *username = [defaults valueForKey:@"Username"];
-        NSString *pasteValue = [self fetchMostRecentPasteString:username];
-        NSLog(pasteValue);
-        [self welcomeHomeUser:pasteValue loginName:username];
+        [self fetchMostRecentPasteString:username withBlock:^(NSString *myString) {
+            NSString *pasteValue = myString;
+            [self welcomeHomeUser:pasteValue loginName:username];
+        }];
+
     }else{
         [self stopSpinning];
         [self setHide:YES];
@@ -212,7 +214,9 @@
         [defaults setBool:NO forKey:@"isLoggedIn"];
         [self togglePaste];
         [self setHide:YES];
-        [_loginManager logOut];
+        if ([FBSDKAccessToken currentAccessToken]){
+                [_loginManager logOut];
+        }
         [self setButtonTitle];
     }
     else if ([self isConnected]){
@@ -225,7 +229,7 @@
             }
         }];
     }else{
-        
+        [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
     }
 }
 
@@ -271,7 +275,7 @@
         }
         
     }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unlock Full Functionality" message:@"To make pastes and view your past pastes, log in with Facebook!"  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unlock Full Functionality" message:@"To make pastes and view your past pastes, log in!"  delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Log In", nil];
         
         [alert show];
     }
@@ -326,7 +330,10 @@
             [self fbLoginProcedure];
         }else{
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [self fetchMostRecentPasteString:[defaults valueForKey:@"Username"]];
+            [self fetchMostRecentPasteString:[defaults valueForKey:@"Username"] withBlock:^(NSString *myString) {
+                _mostRecentPaste.text = myString;
+            }];
+            
         }
         
     }
@@ -348,14 +355,15 @@
     
     if ([title isEqualToString:@"Log In"]){
         if ([self isConnected]){
-            [_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+            /*[_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
                 if (error){
                 } else if (result.isCancelled){
                 }else{
                     [self fbLoginProcedure];
                     [self setButtonTitle];
                 }
-            }];
+            }];*/
+            [self actionSheetInitializer];
         }else{
             [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
         }
@@ -445,8 +453,11 @@
         NSDictionary *dict = resp[0];
         NSString *response = [dict valueForKey:@"response"];
         if ([response integerValue] == 0){
-            NSString *pasteValue = [self fetchMostRecentPasteString:usernameText];
-            [self welcomeHomeUser:pasteValue loginName:usernameText];
+           [self fetchMostRecentPasteString:usernameText withBlock:^(NSString *myString) {
+               NSString *pasteValue = myString;
+               [self welcomeHomeUser:pasteValue loginName:usernameText];
+           }];
+
         }else{
             [ToastView showToast:self.view withText:@"Incorrect Username or Password" withDuaration:1.0];
         }
