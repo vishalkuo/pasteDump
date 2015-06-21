@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,6 +39,10 @@ public class MainFragment extends Fragment {
     private Button pasteButton;
     private Button clipboardButton;
     private Button refreshButton;
+    private EditText pasteField;
+    private boolean isInPasteState = false;
+    private Context c;
+
 
 
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
@@ -69,7 +74,7 @@ public class MainFragment extends Fragment {
 
         callbackManager = CallbackManager.Factory.create();
 
-
+        c = getActivity().getApplicationContext();
         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
@@ -124,8 +129,14 @@ public class MainFragment extends Fragment {
         clipboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipData data = ClipData.newPlainText("myText", textResult.getText());
-                clipboard.setPrimaryClip(data);
+                if (!isInPasteState){
+                    ClipData data = ClipData.newPlainText("myText", textResult.getText());
+                    clipboard.setPrimaryClip(data);
+                }else{
+                    new AsyncSend(pasteField.getText().toString(),
+                            getActivity().getApplicationContext(), accessToken.getUserId()).execute();
+                }
+
             }
         });
 
@@ -142,6 +153,22 @@ public class MainFragment extends Fragment {
                         }
                     }).execute();
                 }
+            }
+        });
+
+        pasteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isInPasteState){
+                    pasteField.setVisibility(View.VISIBLE);
+                    clipboardButton.setText("Send");
+                    pasteButton.setText("Back");
+                }else{
+                    pasteButton.setText("Make a Paste");
+                    clipboardButton.setText("Copy to Clipboard");
+                    pasteField.setVisibility(View.GONE);
+                }
+                isInPasteState = !isInPasteState;
             }
         });
 
