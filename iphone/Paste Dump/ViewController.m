@@ -355,14 +355,6 @@
     
     if ([title isEqualToString:@"Log In"]){
         if ([self isConnected]){
-            /*[_loginManager logInWithReadPermissions:@[@"email"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-                if (error){
-                } else if (result.isCancelled){
-                }else{
-                    [self fbLoginProcedure];
-                    [self setButtonTitle];
-                }
-            }];*/
             [self actionSheetInitializer];
         }else{
             [ToastView showToast:self.view withText:@"No Internet!" withDuaration:1.0];
@@ -474,6 +466,7 @@
     _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", username];
     _mostRecentPaste.text = pasteValue;
     [self setButtonTitle];
+    [self stopSpinning];
     
 }
 
