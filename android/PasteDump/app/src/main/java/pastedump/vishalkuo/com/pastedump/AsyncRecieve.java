@@ -125,11 +125,12 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
                     String responseVal = jsonObject.getString("response");
                     if (!responseVal.equals("100")){
                         String outputString = jsonObject.getString("paste");
-                        textView.setText(outputString);
                         profile = Profile.getCurrentProfile();
                         String welcomeString = "Welcome, " + profile.getFirstName() + ", your most recent paste was:";
                         welcomeView.setText(welcomeString);
-                        delegate.asyncDidFinish();
+                        textView.setText(outputString);
+                        delegate.asyncDidFinish(outputString);
+
                     }else {
                         Toast.makeText(context, "No pastes found!", Toast.LENGTH_LONG).show();
                     }

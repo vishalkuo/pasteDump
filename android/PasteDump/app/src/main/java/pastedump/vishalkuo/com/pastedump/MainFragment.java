@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,6 @@ public class MainFragment extends Fragment {
     private Profile profile;
     private Button pasteButton;
     private Button clipboardButton;
-    private Button refreshButton;
     private EditText pasteField;
     private boolean isInPasteState = false;
     private Context c;
@@ -80,10 +80,12 @@ public class MainFragment extends Fragment {
             protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
                if (accessToken1.getCurrentAccessToken() != null){
                    setHide(true);
-                   new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult, "1"
+                   new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult,
+                           accessToken1.getUserId()
                            , profile, nameWelcome, new AsyncFinish() {
                        @Override
-                       public void asyncDidFinish() {
+                       public void asyncDidFinish(String result) {
+                           //The result is a debug value
                            setHide(false);
                        }
                    })
@@ -119,7 +121,8 @@ public class MainFragment extends Fragment {
         nameWelcome = (TextView)view.findViewById(R.id.nameVal);
         pasteButton = (Button)view.findViewById(R.id.makePasteBtn);
         clipboardButton = (Button)view.findViewById(R.id.clipboardBtn);
-        refreshButton = (Button)view.findViewById(R.id.refreshBtn);
+        pasteField = (EditText)view.findViewById(R.id.makePasteField);
+
 
         final ClipboardManager clipboard = (ClipboardManager)getActivity().
                 getSystemService(Context.CLIPBOARD_SERVICE);
@@ -134,40 +137,17 @@ public class MainFragment extends Fragment {
                     clipboard.setPrimaryClip(data);
                 }else{
                     new AsyncSend(pasteField.getText().toString(),
-                            getActivity().getApplicationContext(), accessToken.getUserId()).execute();
+                            getActivity().getApplicationContext(),
+                            accessToken.getCurrentAccessToken().getUserId()).execute();
                 }
 
-            }
-        });
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (accessToken.getCurrentAccessToken() != null){
-                    setHide(true);
-                    new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult
-                            , "1", profile, nameWelcome, new AsyncFinish() {
-                        @Override
-                        public void asyncDidFinish() {
-                            setHide(false);
-                        }
-                    }).execute();
-                }
             }
         });
 
         pasteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isInPasteState){
-                    pasteField.setVisibility(View.VISIBLE);
-                    clipboardButton.setText("Send");
-                    pasteButton.setText("Back");
-                }else{
-                    pasteButton.setText("Make a Paste");
-                    clipboardButton.setText("Copy to Clipboard");
-                    pasteField.setVisibility(View.GONE);
-                }
+                togglePasteState(isInPasteState);
                 isInPasteState = !isInPasteState;
             }
         });
@@ -194,13 +174,23 @@ public class MainFragment extends Fragment {
             textResult.setVisibility(View.GONE);
             clipboardButton.setVisibility(View.GONE);
             pasteButton.setVisibility(View.GONE);
-            refreshButton.setVisibility(View.GONE);
         }else{
             nameWelcome.setVisibility(View.VISIBLE);
             textResult.setVisibility(View.VISIBLE);
             clipboardButton.setVisibility(View.VISIBLE);
             pasteButton.setVisibility(View.VISIBLE);
-            refreshButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void togglePasteState(boolean inPasteState){
+        if (inPasteState){
+            pasteButton.setText("Make a Paste");
+            clipboardButton.setText("Copy to Clipboard");
+            pasteField.setVisibility(View.GONE);
+        }else{
+            pasteField.setVisibility(View.VISIBLE);
+            clipboardButton.setText("Send");
+            pasteButton.setText("Back");
         }
     }
 }
