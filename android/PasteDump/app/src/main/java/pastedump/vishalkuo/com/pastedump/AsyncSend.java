@@ -25,7 +25,7 @@ import retrofit.client.Response;
  */
 public class AsyncSend extends AsyncTask<Void, Void, Void> {
     private String sendVal;
-    private final String URLSTRING = "http://vishalkuo.com/pastebin.php";
+    private final String URLSTRING = "http://vishalkuo.com/pastebinJSON.php";
     private String idString;
     private int responseCode = 1;
     private Context c;
@@ -81,22 +81,22 @@ public class AsyncSend extends AsyncTask<Void, Void, Void> {
     }*/
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(URLSTRING)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         Service service = restAdapter.create(Service.class);
-        service.newTask(new Task(idString, sendVal), new Callback<Task>() {
-            @Override
-            public void success(Task task, Response response) {
-                Log.d("YEAH", "WE DID IT");
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("OOPS", "HERE");
-                Log.d("ERR", error.getMessage());
-            }
-        });
+        service.newTask(new Task(idString, sendVal), new Callback<String>() {
+                    @Override
+                    public void success(String s, Response response) {
+                        Log.d("YES", response.toString());
+                    }
 
-        responseCode = 0;
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("NO", error.getMessage());
+                    }
+                });
+                responseCode = 0;
         return null;
     }
 }

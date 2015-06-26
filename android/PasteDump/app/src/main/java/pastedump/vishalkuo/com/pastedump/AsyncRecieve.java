@@ -88,15 +88,19 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
 
         }catch(MalformedURLException e){
             responseCode = 3;
+            Log.d("HM", e.getMessage());
             return jarr;
         }catch(IOException e){
             responseCode = 4;
+            Log.d("HM", e.getMessage());
             return jarr;
         }try{
             jarr = new JSONArray(returnString);
+
             responseCode = 1;
         }catch(JSONException e){
             responseCode = 3;
+            Log.d("HM", e.getMessage());
         }
         return jarr;
     }
@@ -137,6 +141,7 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
 
                 }catch(JSONException e){
                     Toast.makeText(context, "Something went wrong! Please try again later", Toast.LENGTH_LONG).show();
+                    Log.d("HM", e.getMessage());
                 }
         }
         textView.setVisibility(View.VISIBLE);

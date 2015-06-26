@@ -9,5 +9,5 @@ import retrofit.http.POST;
  */
 public interface Service {
     @POST("/")
-    void newTask(@Body Task task, Callback<Task> taskCallback);
+    void newTask(@Body Task task, Callback<String> taskCallback);
 }
