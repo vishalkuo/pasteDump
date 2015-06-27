@@ -73,6 +73,7 @@ public class MainFragment extends Fragment {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
+        profile = Profile.getCurrentProfile();
 
         c = getActivity().getApplicationContext();
         accessTokenTracker = new AccessTokenTracker() {
@@ -80,9 +81,10 @@ public class MainFragment extends Fragment {
             protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
                if (accessToken1.getCurrentAccessToken() != null){
                    setHide(true);
+                   profile = Profile.getCurrentProfile();
                    new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult,
                            accessToken1.getUserId()
-                           , profile, nameWelcome, new AsyncFinish() {
+                           , profile.getFirstName(), nameWelcome, new AsyncFinish() {
                        @Override
                        public void asyncDidFinish(String result) {
                            //The result is a debug value

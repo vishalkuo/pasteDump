@@ -11,5 +11,5 @@ import retrofit.http.POST;
  */
 public interface RecieveService {
     @POST("/")
-    void newTask(@Body Task task, Callback<List<Task>> taskCallback);
+    void newTask(@Body RecTask task, Callback<List<RecTask>> taskCallback);
 }

@@ -32,8 +32,6 @@
         android:layout_height="45dp"
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
         android:layout_above="@id/pasteVal"/>
 
 

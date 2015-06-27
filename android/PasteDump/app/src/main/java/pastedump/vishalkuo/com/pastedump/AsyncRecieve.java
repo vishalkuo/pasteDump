@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -34,7 +35,7 @@ import retrofit.client.Response;
 /**
  * Created by vishalkuo on 15-06-14.
  */
-public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
+public class AsyncRecieve extends AsyncTask<Void, Void, RecTask> {
     private ProgressBar progressBar;
     private TextView textView;
     private Context context;
@@ -43,11 +44,11 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
     private String returnString;
     private JSONArray jarr;
     private String accessCode;
-    private Profile profile;
+    private String profile;
     private TextView welcomeView;
     public AsyncFinish delegate = null;
 
-    public AsyncRecieve(Context c, ProgressBar p, TextView t, String accessCode, Profile pr,
+    public AsyncRecieve(Context c, ProgressBar p, TextView t, String accessCode, String pr,
                         TextView te, AsyncFinish a){
         this.progressBar = p;
         this.context = c;
@@ -60,73 +61,8 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
 
 
     @Override
-    protected JSONArray doInBackground(Void... voids) {
-        /*try{
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write("id=" + accessCode+ "&code=0");
-            writer.flush();
-            writer.close();
-            os.close();
-            conn.connect();
-
-
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String line;
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((line = br.readLine()) != null){
-                stringBuilder.append(line);
-            }
-
-            in.close();
-            br.close();
-            returnString = stringBuilder.toString();
-
-        }catch(MalformedURLException e){
-            responseCode = 3;
-            Log.d("HM", e.getMessage());
-            return jarr;
-        }catch(IOException e){
-            responseCode = 4;
-            Log.d("HM", e.getMessage());
-            return jarr;
-        }try{
-            jarr = new JSONArray(returnString);
-
-            responseCode = 1;
-        }catch(JSONException e){
-            responseCode = 3;
-            Log.d("HM", e.getMessage());
-        }
-        return jarr;*/
-        RestAdapter adapter = new RestAdapter.Builder()
-                .setEndpoint(urlString)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-
-        Service service = adapter.create(Service.class);
-
-        service.newTask(new Task(accessCode, "test", "0"), new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                Log.d("APP", s);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("ERROR", error.getMessage());
-            }
-        });
-
+    protected RecTask doInBackground(Void... voids) {
+        //This whole class might be pointless
         return null;
     }
 
@@ -137,38 +73,47 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
     }
 
     @Override
-    protected void onPostExecute(JSONArray result) {
-        super.onPostExecute(result);
+    protected void onPostExecute(RecTask task) {
+        super.onPostExecute(task);
         progressBar.setVisibility(View.GONE);
 
-        switch (responseCode){
-            case 0:case 3:
-                Toast.makeText(context, "Connection Error!", Toast.LENGTH_LONG).show();
-                break;
-            case 4:
-                Toast.makeText(context, "Something went wrong! Please try again later", Toast.LENGTH_LONG).show();
-                break;
-            case 1:
-                try{
-                    JSONObject jsonObject = result.getJSONObject(0);
-                    String responseVal = jsonObject.getString("response");
-                    if (!responseVal.equals("100")){
-                        String outputString = jsonObject.getString("paste");
-                        profile = Profile.getCurrentProfile();
-                        String welcomeString = "Welcome, " + profile.getFirstName() + ", your most recent paste was:";
-                        welcomeView.setText(welcomeString);
-                        textView.setText(outputString);
-                        delegate.asyncDidFinish(outputString);
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setEndpoint(urlString)
+                .build();
 
-                    }else {
-                        Toast.makeText(context, "No pastes found!", Toast.LENGTH_LONG).show();
-                    }
+        RecieveService recieveService = adapter.create(RecieveService.class);
+        recieveService.newTask(new RecTask(accessCode), new Callback<List<RecTask>>() {
+            @Override
+            public void success(List<RecTask> recTasks, Response response) {
+                String result = recTasks.get(0).getPaste();
+                String resp = recTasks.get(0).getResponse();
+                setFields(result, resp, true);
+            }
 
-                }catch(JSONException e){
-                    Toast.makeText(context, "Something went wrong! Please try again later", Toast.LENGTH_LONG).show();
-                    Log.d("HM", e.getMessage());
-                }
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("APP", error.getMessage());
+                setFields("BAD", "EXTRABAD", false);
+            }
+        });
+        delegate.asyncDidFinish("lol");
+    }
+
+    private void setFields(String result, String response, boolean isGood){
+        if (isGood){
+            if (response.equals("100")){
+                String welcomeString = "Welcome, " + profile + ", we couldn't find any pastes:";
+                welcomeView.setText(welcomeString);
+                String outputStr = "";
+                textView.setText(outputStr);
+            }else{
+                String welcomeString = "Welcome, " + profile + ", your most recent paste was:";
+                welcomeView.setText(welcomeString);
+                textView.setText(result);
+            }
+        }else{
+            Toast.makeText(context, "Something Went Wrong!", Toast.LENGTH_LONG).show();
         }
-        textView.setVisibility(View.VISIBLE);
+
     }
 }

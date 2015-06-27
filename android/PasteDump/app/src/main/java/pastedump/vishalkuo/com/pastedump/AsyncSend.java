@@ -14,7 +14,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.AbstractMap;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -54,22 +53,22 @@ public class AsyncSend extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(URLSTRING)
-
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
-        RecieveService service = restAdapter.create(RecieveService.class);
+        Service service = restAdapter.create(Service.class);
 
-        service.newTask(new Task(idString, sendVal), new Callback<List<Task>>() {
-                    @Override
-                    public void success(List<Task> strings, Response response) {
-                        Log.d("APP", "SUCCESS");
-                    }
+        service.newTask(new Task(idString, sendVal), new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                Log.d("YES", response.toString());
+            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("BAD", error.getMessage());
-                    }
-                });
-                responseCode = 0;
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("NO", error.getMessage());
+            }
+        });
+        responseCode = 0;
         return null;
     }
 }
