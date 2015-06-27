@@ -46,6 +46,8 @@ public class AsyncSend extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
         if (responseCode == 1) {
             Toast.makeText(c, "Something Went Wrong!", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(c, "Success!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -53,7 +55,6 @@ public class AsyncSend extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(URLSTRING)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         Service service = restAdapter.create(Service.class);
 
@@ -65,7 +66,6 @@ public class AsyncSend extends AsyncTask<Void, Void, Void> {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d("NO", error.getMessage());
             }
         });
         responseCode = 0;

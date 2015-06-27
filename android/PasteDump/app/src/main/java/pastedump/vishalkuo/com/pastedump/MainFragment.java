@@ -3,13 +3,17 @@ package pastedump.vishalkuo.com.pastedump;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -24,12 +28,13 @@ import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.squareup.seismic.ShakeDetector;
 
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment{
 
     private CallbackManager callbackManager;
     private AccessToken accessToken;
@@ -69,6 +74,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
@@ -134,10 +140,10 @@ public class MainFragment extends Fragment {
         clipboardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isInPasteState){
+                if (!isInPasteState) {
                     ClipData data = ClipData.newPlainText("myText", textResult.getText());
                     clipboard.setPrimaryClip(data);
-                }else{
+                } else {
                     new AsyncSend(pasteField.getText().toString(),
                             getActivity().getApplicationContext(),
                             accessToken.getCurrentAccessToken().getUserId()).execute();
@@ -153,6 +159,28 @@ public class MainFragment extends Fragment {
                 isInPasteState = !isInPasteState;
             }
         });
+
+        pasteField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE || keyEvent.getKeyCode() ==
+                        KeyEvent.KEYCODE_ENTER) {
+                    new AsyncSend(pasteField.getText().toString(),
+                            getActivity().getApplicationContext(),
+                            accessToken.getCurrentAccessToken().getUserId()).execute();
+
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService
+                            (Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(pasteField.getWindowToken(), 0);
+                    pasteField.setText("");
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+
 
     }
 
@@ -189,10 +217,22 @@ public class MainFragment extends Fragment {
             pasteButton.setText("Make a Paste");
             clipboardButton.setText("Copy to Clipboard");
             pasteField.setVisibility(View.GONE);
+            textResult.setVisibility(View.VISIBLE);
+            nameWelcome.setVisibility(View.VISIBLE);
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService
+                    (Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(pasteField.getWindowToken() , 0);
+
         }else{
             pasteField.setVisibility(View.VISIBLE);
             clipboardButton.setText("Send");
             pasteButton.setText("Back");
+            textResult.setVisibility(View.GONE);
+            nameWelcome.setVisibility(View.GONE);
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService
+                    (Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            pasteField.requestFocus();
         }
     }
 }

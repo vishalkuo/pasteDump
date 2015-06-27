@@ -7,24 +7,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.facebook.Profile;
-
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import retrofit.Callback;
@@ -39,9 +22,7 @@ public class AsyncRecieve extends AsyncTask<Void, Void, RecTask> {
     private ProgressBar progressBar;
     private TextView textView;
     private Context context;
-    private int responseCode = 0;
     private final String urlString = "http://vishalkuo.com/pastebinJSON.php";
-    private String returnString;
     private JSONArray jarr;
     private String accessCode;
     private String profile;
