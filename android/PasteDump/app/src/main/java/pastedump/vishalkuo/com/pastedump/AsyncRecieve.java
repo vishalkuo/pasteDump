@@ -26,6 +26,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by vishalkuo on 15-06-14.
  */
@@ -34,7 +39,7 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
     private TextView textView;
     private Context context;
     private int responseCode = 0;
-    private final String urlString = "http://vishalkuo.com/pastebin.php";
+    private final String urlString = "http://vishalkuo.com/pastebinJSON.php";
     private String returnString;
     private JSONArray jarr;
     private String accessCode;
@@ -56,7 +61,7 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
 
     @Override
     protected JSONArray doInBackground(Void... voids) {
-        try{
+        /*try{
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setReadTimeout(10000);
@@ -102,7 +107,27 @@ public class AsyncRecieve extends AsyncTask<Void, Void, JSONArray> {
             responseCode = 3;
             Log.d("HM", e.getMessage());
         }
-        return jarr;
+        return jarr;*/
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setEndpoint(urlString)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+
+        Service service = adapter.create(Service.class);
+
+        service.newTask(new Task(accessCode, "test", "0"), new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                Log.d("APP", s);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("ERROR", error.getMessage());
+            }
+        });
+
+        return null;
     }
 
     @Override

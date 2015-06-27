@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.AbstractMap;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -51,49 +52,21 @@ public class AsyncSend extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-    /*try {
-        URL url = new URL(URLSTRING);
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setReadTimeout(10000);
-        conn.setConnectTimeout(15000);
-        conn.setRequestMethod("POST");
-        conn.setDoInput(true);
-        conn.setDoOutput(true);
-
-        String postString = "id=" + idString + "&code=1&paste=" + sendVal;
-        Log.d("APP", postString);
-        OutputStream os = conn.getOutputStream();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-
-        writer.write(postString);
-        writer.flush();
-        writer.close();
-        os.close();
-
-        conn.disconnect();
-
-    }catch(MalformedURLException e){
-        responseCode = 1;
-    }catch(ProtocolException e){
-        responseCode = 1;
-    }catch(IOException e){
-        responseCode = 1;
-    }*/
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(URLSTRING)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        Service service = restAdapter.create(Service.class);
 
-        service.newTask(new Task(idString, sendVal), new Callback<String>() {
+                .build();
+        RecieveService service = restAdapter.create(RecieveService.class);
+
+        service.newTask(new Task(idString, sendVal), new Callback<List<Task>>() {
                     @Override
-                    public void success(String s, Response response) {
-                        Log.d("YES", response.toString());
+                    public void success(List<Task> strings, Response response) {
+                        Log.d("APP", "SUCCESS");
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Log.d("NO", error.getMessage());
+                        Log.d("BAD", error.getMessage());
                     }
                 });
                 responseCode = 0;
