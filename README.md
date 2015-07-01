@@ -8,6 +8,7 @@ Share links between devices quickly!
 - Multiple link support and picture support following
 ####update:
 Rejected due to 17.2. Working on it.
+Rejected again due to 17.2. 
 
 ####Android:
 - Currently just got FB Auth working
