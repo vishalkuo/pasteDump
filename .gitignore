@@ -1,3 +1,4 @@
 AFNetworking/
 UIKit+AFNetworking/
 *.framework
+Pods/
