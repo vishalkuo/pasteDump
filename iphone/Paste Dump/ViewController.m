@@ -92,7 +92,15 @@
         _mostRecentPaste.text = @"";
         _loginStat.text = @"";
         [self stopSpinning];
+        _loginStat.alpha = 0;
+        _makeAPasteButton.alpha = 0;
+        _mostRecentPaste.alpha = 0;
+        _clipboardButton.alpha = 0;
+        _refreshButton.alpha = 0;
+        _makePasteField.alpha = 0;
     }else{
+        _isInPasteState = YES;
+        [self togglePaste];
         _loginStat.alpha = 1.0f;
         _makeAPasteButton.alpha = 1.0f;
         _mostRecentPaste.alpha = 1.0f;
@@ -466,6 +474,7 @@
     _loginStat.text = [NSString stringWithFormat:@"Welcome, %@. \n Your most recent paste was: ", username];
     _mostRecentPaste.text = pasteValue;
     [self setButtonTitle];
+    [self setHide:NO];
     [self stopSpinning];
     
 }
