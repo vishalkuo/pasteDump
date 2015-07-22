@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -41,6 +42,7 @@ public class MainFragment extends Fragment{
     private ProgressBar progressBar;
     private TextView textResult;
     private TextView nameWelcome;
+    private TextView title;
     private Profile profile;
     private Button pasteButton;
     private Button clipboardButton;
@@ -130,6 +132,7 @@ public class MainFragment extends Fragment{
         pasteButton = (Button)view.findViewById(R.id.makePasteBtn);
         clipboardButton = (Button)view.findViewById(R.id.clipboardBtn);
         pasteField = (EditText)view.findViewById(R.id.makePasteField);
+        title=(TextView)view.findViewById(R.id.title);
 
 
         final ClipboardManager clipboard = (ClipboardManager)getActivity().
@@ -219,11 +222,25 @@ public class MainFragment extends Fragment{
             pasteField.setVisibility(View.GONE);
             textResult.setVisibility(View.VISIBLE);
             nameWelcome.setVisibility(View.VISIBLE);
+            title.setText("Paste Dump");
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            params.addRule(RelativeLayout.ABOVE, R.id.nameVal);
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            title.setLayoutParams(params);
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService
                     (Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(pasteField.getWindowToken() , 0);
 
         }else{
+            title.setText("Make A Paste!");
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            params.addRule(RelativeLayout.ABOVE, R.id.makePasteField);
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            title.setLayoutParams(params);
             pasteField.setVisibility(View.VISIBLE);
             clipboardButton.setText("Send");
             pasteButton.setText("Back");

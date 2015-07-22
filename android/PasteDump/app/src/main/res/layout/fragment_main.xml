@@ -20,6 +20,10 @@
         android:id = "@+id/pasteVal"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="#62AFF6"
+        android:textColor="#FFFFFF"
         android:textAlignment="center"
         android:paddingLeft="200dp"
         android:paddingRight="200dp"
@@ -30,6 +34,8 @@
         android:id = "@+id/nameVal"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/pasteVal"/>
@@ -76,6 +82,16 @@
         android:singleLine="true"
         android:visibility="gone"/>
 
+    <TextView
+        android:id = "@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paste Dump"
+        android:textColor="@android:color/white"
+        android:layout_above="@id/nameVal"
+        android:layout_centerHorizontal="true"
+        android:textSize="50dp"
+        android:paddingBottom="40dp"/>
 
 
 
