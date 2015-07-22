@@ -93,6 +93,15 @@
         android:textSize="50dp"
         android:paddingBottom="40dp"/>
 
+    <Button
+        android:id="@+id/refreshBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/refresh"/>
+
 
 
 </RelativeLayout>

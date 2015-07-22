@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -46,6 +47,7 @@ public class MainFragment extends Fragment{
     private Profile profile;
     private Button pasteButton;
     private Button clipboardButton;
+    private Button refreshButton;
     private EditText pasteField;
     private boolean isInPasteState = false;
     private Context c;
@@ -133,6 +135,7 @@ public class MainFragment extends Fragment{
         clipboardButton = (Button)view.findViewById(R.id.clipboardBtn);
         pasteField = (EditText)view.findViewById(R.id.makePasteField);
         title=(TextView)view.findViewById(R.id.title);
+        refreshButton = (Button)view.findViewById(R.id.refreshBtn);
 
 
         final ClipboardManager clipboard = (ClipboardManager)getActivity().
@@ -146,6 +149,7 @@ public class MainFragment extends Fragment{
                 if (!isInPasteState) {
                     ClipData data = ClipData.newPlainText("myText", textResult.getText());
                     clipboard.setPrimaryClip(data);
+                    Toast.makeText(c, "Copied!", Toast.LENGTH_LONG).show();
                 } else {
                     new AsyncSend(pasteField.getText().toString(),
                             getActivity().getApplicationContext(),
@@ -183,6 +187,22 @@ public class MainFragment extends Fragment{
             }
         });
 
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setHide(true);
+                new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult,
+                        accessToken.getCurrentAccessToken().getUserId()
+                        , profile.getFirstName(), nameWelcome, new AsyncFinish() {
+                    @Override
+                    public void asyncDidFinish(String result) {
+                        //The result is a debug value
+                        setHide(false);
+                    }
+                })
+                        .execute();
+            }
+        });
 
 
     }
@@ -207,6 +227,7 @@ public class MainFragment extends Fragment{
             textResult.setVisibility(View.GONE);
             clipboardButton.setVisibility(View.GONE);
             pasteButton.setVisibility(View.GONE);
+            refreshButton.setVisibility(View.GONE);
         }else{
             nameWelcome.setVisibility(View.VISIBLE);
             textResult.setVisibility(View.VISIBLE);
@@ -229,12 +250,13 @@ public class MainFragment extends Fragment{
             params.addRule(RelativeLayout.ABOVE, R.id.nameVal);
             params.addRule(RelativeLayout.CENTER_HORIZONTAL);
             title.setLayoutParams(params);
+            refreshButton.setVisibility(View.VISIBLE);
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService
                     (Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(pasteField.getWindowToken() , 0);
 
         }else{
-            title.setText("Make A Paste!");
+            title.setText("Make A Paste");
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
             );
@@ -242,6 +264,7 @@ public class MainFragment extends Fragment{
             params.addRule(RelativeLayout.CENTER_HORIZONTAL);
             title.setLayoutParams(params);
             pasteField.setVisibility(View.VISIBLE);
+            refreshButton.setVisibility(View.GONE);
             clipboardButton.setText("Send");
             pasteButton.setText("Back");
             textResult.setVisibility(View.GONE);
