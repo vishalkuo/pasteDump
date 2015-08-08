@@ -28,9 +28,14 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.squareup.seismic.ShakeDetector;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -48,28 +53,12 @@ public class MainFragment extends Fragment{
     private Button pasteButton;
     private Button clipboardButton;
     private Button refreshButton;
+    private Button loginButton;
     private EditText pasteField;
     private boolean isInPasteState = false;
     private Context c;
 
 
-
-    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            accessToken = loginResult.getAccessToken();
-        }
-
-        @Override
-        public void onCancel() {
-
-        }
-
-        @Override
-        public void onError(FacebookException e) {
-
-        }
-    };
     private AccessTokenTracker accessTokenTracker;
 
     public MainFragment() {
@@ -83,12 +72,14 @@ public class MainFragment extends Fragment{
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
+
+
         profile = Profile.getCurrentProfile();
 
         c = getActivity().getApplicationContext();
         accessTokenTracker = new AccessTokenTracker() {
             @Override
-            protected void onCurrentAccessTokenChanged(AccessToken accessToken, AccessToken accessToken1) {
+            protected void onCurrentAccessTokenChanged(final AccessToken accessToken, final AccessToken accessToken1) {
                if (accessToken1.getCurrentAccessToken() != null){
                    setHide(true);
                    profile = Profile.getCurrentProfile();
@@ -121,13 +112,8 @@ public class MainFragment extends Fragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LoginButton loginButton = (LoginButton)view.findViewById(R.id.login_button);
 
-        loginButton.setReadPermissions("user_friends");
-        loginButton.setFragment(this);
-
-        loginButton.registerCallback(callbackManager, callback);
-
+        loginButton = (Button)view.findViewById(R.id.login_button);
         progressBar = (ProgressBar)view.findViewById(R.id.progressSpinner);
         textResult = (TextView)view.findViewById(R.id.pasteVal);
         nameWelcome = (TextView)view.findViewById(R.id.nameVal);
@@ -136,11 +122,30 @@ public class MainFragment extends Fragment{
         pasteField = (EditText)view.findViewById(R.id.makePasteField);
         title=(TextView)view.findViewById(R.id.title);
         refreshButton = (Button)view.findViewById(R.id.refreshBtn);
+        final Fragment fragment = this;
 
 
         final ClipboardManager clipboard = (ClipboardManager)getActivity().
                 getSystemService(Context.CLIPBOARD_SERVICE);
 
+        if (accessToken.getCurrentAccessToken() == null){
+            setHide(true);
+        }
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AccessToken.getCurrentAccessToken() == null){
+                    List<String> collection = new ArrayList<>();
+                    collection.add("public_profile");
+                    LoginManager.getInstance().logInWithReadPermissions(fragment, collection);
+                    Log.d("HERE?", AccessToken.getCurrentAccessToken().toString());
+                } else{
+                    LoginManager.getInstance().logOut();
+                }
+
+            }
+        });
 
 
         clipboardButton.setOnClickListener(new View.OnClickListener() {
@@ -228,11 +233,13 @@ public class MainFragment extends Fragment{
             clipboardButton.setVisibility(View.GONE);
             pasteButton.setVisibility(View.GONE);
             refreshButton.setVisibility(View.GONE);
+            loginButton.setText("Login");
         }else{
             nameWelcome.setVisibility(View.VISIBLE);
             textResult.setVisibility(View.VISIBLE);
             clipboardButton.setVisibility(View.VISIBLE);
             pasteButton.setVisibility(View.VISIBLE);
+            loginButton.setText("Logout");
         }
     }
 
