@@ -3,7 +3,6 @@ package pastedump.vishalkuo.com.pastedump;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,12 +28,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.squareup.seismic.ShakeDetector;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -69,38 +63,6 @@ public class MainFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
 
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
-
-        callbackManager = CallbackManager.Factory.create();
-
-
-        profile = Profile.getCurrentProfile();
-
-        c = getActivity().getApplicationContext();
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(final AccessToken accessToken, final AccessToken accessToken1) {
-               if (accessToken1.getCurrentAccessToken() != null){
-                   setHide(true);
-                   profile = Profile.getCurrentProfile();
-                   new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult,
-                           accessToken1.getUserId()
-                           , profile.getFirstName(), nameWelcome, new AsyncFinish() {
-                       @Override
-                       public void asyncDidFinish(String result) {
-                           //The result is a debug value
-                           setHide(false);
-                       }
-                   })
-                           .execute();
-               }else{
-                   setHide(true);
-               }
-
-            }
-        };
-
-
     }
 
     @Override
@@ -112,6 +74,38 @@ public class MainFragment extends Fragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+
+        callbackManager = CallbackManager.Factory.create();
+
+
+        profile = Profile.getCurrentProfile();
+
+        c = getActivity().getApplicationContext();
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(final AccessToken accessToken, final AccessToken accessToken1) {
+                if (accessToken1.getCurrentAccessToken() != null){
+                    setHide(true);
+                    profile = Profile.getCurrentProfile();
+                    new AsyncRecieve(getActivity().getApplicationContext(), progressBar, textResult,
+                            accessToken1.getUserId()
+                            , profile.getFirstName(), nameWelcome, new AsyncFinish() {
+                        @Override
+                        public void asyncDidFinish(String result) {
+                            //The result is a debug value
+                            setHide(false);
+                        }
+                    })
+                            .execute();
+                }else{
+                    setHide(true);
+                }
+
+            }
+        };
 
         loginButton = (Button)view.findViewById(R.id.login_button);
         progressBar = (ProgressBar)view.findViewById(R.id.progressSpinner);
@@ -139,8 +133,7 @@ public class MainFragment extends Fragment{
                     List<String> collection = new ArrayList<>();
                     collection.add("public_profile");
                     LoginManager.getInstance().logInWithReadPermissions(fragment, collection);
-                    Log.d("HERE?", AccessToken.getCurrentAccessToken().toString());
-                } else{
+                } else {
                     LoginManager.getInstance().logOut();
                 }
 
@@ -239,6 +232,7 @@ public class MainFragment extends Fragment{
             textResult.setVisibility(View.VISIBLE);
             clipboardButton.setVisibility(View.VISIBLE);
             pasteButton.setVisibility(View.VISIBLE);
+            refreshButton.setVisibility(View.VISIBLE);
             loginButton.setText("Logout");
         }
     }
