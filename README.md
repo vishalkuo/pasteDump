@@ -8,6 +8,9 @@ Paste Dump was inspired during my first co-op term when I was conducting device 
 * Java
 * MySQL
 * PHP
+ 
+## Dates
+May 2015 - July 2015
 
 ## Links
 https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=998402366&mt=8
