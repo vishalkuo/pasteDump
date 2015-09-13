@@ -13,5 +13,5 @@ Paste Dump was inspired during my first co-op term when I was conducting device 
 May 2015 - July 2015
 
 ## Links
-https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=998402366&mt=8
-https://play.google.com/store/apps/details?id=pastedump.vishalkuo.com.pastedump
+* https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=998402366&mt=8
+* https://play.google.com/store/apps/details?id=pastedump.vishalkuo.com.pastedump
